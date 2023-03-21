@@ -1,6 +1,6 @@
 <template>
   <div v-if="user.id" class="min-h-full flex">
-    <Sidebar  class="transition-all " :class="sidebarVissible ? 'w-[230px] p-4' : 'w-0'"/>
+    <Sidebar  class="transition-all" :class="sidebarVissible ? 'w-[230px]' : 'w-0'"/>
     <div class="flex-1">
       <Navbar @toggle-menu="toggleSidebar"/>
       <main class="p-6">

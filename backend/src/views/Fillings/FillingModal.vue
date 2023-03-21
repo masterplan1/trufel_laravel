@@ -28,7 +28,7 @@
               leave-to="opacity-0 scale-95"
             >
               <DialogPanel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                class="w-full max-w-md transform overflow-hidden  min-h-[601px] rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
               >
                 <Spinner v-if="loading" class="flex justify-center"/>
                 <template v-else>
@@ -37,9 +37,12 @@
                         {{ filling.id ? `Редагувати начинку: ${props.filling.title}` : 'Додати начинку' }}
                         <!-- {{ filling }} -->
                         <!-- {{ typeSelected }} -->
+                        <div class="mt-1" v-if="filling.image && filling.id">
+                          {{ filling.image }}
+                        </div>
                       </DialogTitle>
                       <button @click="closeModal"
-                        class="w-8 h-8 flex items-center justify-center roundeed-full 
+                        class="w-8 h-8 flex items-center justify-center rounded-full 
                           transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
                       >
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -48,7 +51,10 @@
                       </button>
                   </header>
                   <div class="mb-2">
-                    <select @change="chooseType" :disabled="filling.id" v-model="typeSelected.id">
+                    <select @change="chooseType" :disabled="filling.id" v-model="typeSelected.id"
+                      class="rounded"
+                      :class="filling.id ? 'opacity-25 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'"
+                    >
                       <option value="null" disabled>Оберіть тип</option>
                       <option v-for="item of typeSelectOptions" :key="item.id" :value="item.id">{{ item.name }}</option>
                     </select>
@@ -56,15 +62,21 @@
                   <form @submit.prevent="onSubmit" v-if="typeSelected.id || filling.id">
                     <div class="p-4 bg-white">
                       <div class="mb-2">
-                        <CustomInput v-if="categorySelectOptions.length > 0" select-title="Категорія" type="select" v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія" />
+                        <CustomInput v-if="categorySelectOptions.length > 0" select-title="Оберіть категорію" type="select" 
+                          v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія"/>
                         <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
                       </div>
                       <div class="mb-2" >
                         <CustomInput v-model="filling.title" label="Назва" />
                         <span v-if="errMsg['title']" class="text-red-400">{{ errMsg['title'] }}</span>
                       </div>
-                      <div class="mb-2">
-                        <CustomInput type="file" label="Product Image" @change="file => filling.image = file" />
+                      
+                      <div class="mb-2 flex justify-between items-center gap-4">
+                        <div class="mt-1" v-if="filling.image || preView">
+                          <img :src="preView || filling.image" class="w-16 rounded" :alt="filling.title">
+                        </div>
+                        <!-- <CustomInput type="file" label="Product Image" @change="file => filling.image = file" class="border-none" /> -->
+                        <CustomInput type="file" label="Product Image" @change="changeImage($event)" class="border-none" />
                         <span v-if="errMsg['image']" class="text-red-400">{{ errMsg['image'] }}</span>  
                       </div>
                       <div class="mb-2">
@@ -72,15 +84,15 @@
                         <span v-if="errMsg['description']" class="text-red-400">{{ errMsg['description'] }}</span> 
                       </div>
                       <div class="mb-2">
-                        <CustomInput type="number" v-model="filling.unit_price" label="Ціна" prepend="$" />
+                        <CustomInput type="number" v-model="filling.unit_price" label="Ціна" prepend="грн" />
                         <span v-if="errMsg['unit_price']" class="text-red-400">{{ errMsg['unit_price'] }}</span> 
                       </div>
                       <div class="mb-2" v-if="checkWeight">
-                        <CustomInput type="number" v-model="filling.min_weight" label="Мін. вага" />
+                        <CustomInput type="number" v-model="filling.min_weight" label="Мін. вага" prepend="кг"/>
                         <span v-if="errMsg['min_weight']" class="text-red-400">{{ errMsg['min_weight'] }}</span> 
                       </div>
                       <div class="mb-2" v-else>
-                        <CustomInput type="number" v-model="filling.min_quantity" label="Мін. кількість" />
+                        <CustomInput type="number" v-model="filling.min_quantity" label="Мін. кількість" prepend="шт"/>
                         <span v-if="errMsg['min_quantity']" class="text-red-400">{{ errMsg['min_quantity'] }}</span> 
                       </div>
                     </div>
@@ -89,13 +101,14 @@
                         class="py-2 px-4 border border-transparent text-sm font-medium rounded-md 
                         text-white bg-indigo-600 hover:bg-indigo-500"
                       >
-                        Submit
+                        <span v-if="filling.id">Зберегти</span>
+                        <span v-else>Створити</span>
                       </button>
                       <button type="button" @click="closeModal" ref="cancelButtonRef"
                         class="mr-3 mt-2 w-full inline-flex justify-center rounded-md border border-gray-300 px-4
                         shadow-sm py-2 bg-white sm:w-auto sm:mt-0"
                       >
-                        Cancel
+                        Закрити
                       </button>
                     </footer>
                   </form>
@@ -122,12 +135,13 @@ const props = defineProps({
   modelValue: Boolean,
   filling: Object,
 })
+const preView = ref(null)
 const errMsg = ref({})
 const typeSelected = ref({id: null})
 const typeSelectOptions = ref([])
 const categorySelectOptions = ref([])
 const loading = ref(false)
-const emit = defineEmits(['update:modelValue', 'closeModal'])
+const emit = defineEmits(['update:modelValue', 'closeModal', 'get-fillings'])
 const filling = ref({...props.filling})
 const show = computed({
   get() {return props.modelValue},
@@ -145,6 +159,7 @@ function closeModal() {
   errMsg.value = {}
   typeSelected.value = {id: null}
   loading.value = false
+  preView.value = null
 }
 function onSubmit(){
   loading.value = true
@@ -154,7 +169,8 @@ function onSubmit(){
         loading.value = false
         if(res.status === 200){
           // todo show notificztion
-          store.dispatch('getFillings', {sort_direction: 'desc'})
+          // store.dispatch('getFillings', {sort_direction: 'desc'})
+          emit('get-fillings')
           closeModal()
         }
       })
@@ -170,7 +186,8 @@ function onSubmit(){
           loading.value = false
           if(res.status === 201){
             // todo show notification
-            store.dispatch('getFillings', {sort_direction: 'desc'})
+            // store.dispatch('getFillings', {sort_direction: 'desc'})
+            emit('get-fillings')
             closeModal()
           }
         })
@@ -270,5 +287,17 @@ function checkCategoryForUpdate(){
         }
     })
   }
+}
+
+
+
+function changeImage($event){
+  filling.value.image = $event
+  // preview image
+  let fileReader = new FileReader()
+  fileReader.onload = (e) => {
+    preView.value = e.target.result
+  }
+  fileReader.readAsDataURL($event)
 }
 </script>

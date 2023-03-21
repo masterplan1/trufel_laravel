@@ -14,4 +14,10 @@ class Type extends Model
     public function categories(){
         return $this->hasMany(Category::class);
     }
+    public function fillings(){
+        return $this->hasManyThrough(Filling::class, Category::class);
+    }
+    public static function getAll(){
+        return self::get();
+    }
 }

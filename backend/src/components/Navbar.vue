@@ -1,6 +1,7 @@
 <template>
-  <header class="h-16 shadow bg-white flex items-center justify-between px-4">
-    <button @click="toggleMenu" class="cursor-pointer">
+  <header class="h-16 shadow bg-white flex items-center sm:justify-between px-4 justify-end
+    ">
+    <button @click="toggleMenu" class="cursor-pointer mx-6">
       <Bars3Icon class="w-6"/>
     </button>
     <button class="flex items-center" @click="logout">

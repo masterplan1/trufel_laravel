@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
 import Order from '../views/Order.vue'
 import Comment from '../views/Comment.vue'
+import Category from '../views/Category.vue'
 import Filling from '../views/Fillings/Filling.vue'
 import Gallary from '../views/Gallary.vue'
 import Statistic from '../views/Statistic.vue'
@@ -41,6 +42,11 @@ const router = createRouter({
           path: 'filling',
           name: 'app.filling',
           component: Filling,
+        },
+        {
+          path: 'category',
+          name: 'app.category',
+          component: Category,
         },
         {
           path: 'gallary',

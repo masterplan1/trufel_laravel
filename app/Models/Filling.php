@@ -11,4 +11,10 @@ class Filling extends Model
     
     protected $fillable = ['title', 'description', 'image', 'min_weight', 'min_quantity', 'category_id', 'unit_price'];
     
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+    public function type(){
+        return $this->category->type;
+    }
 }

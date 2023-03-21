@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\FillingController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\FillingController;
+use App\Http\Controllers\SiteController;
 use App\Models\Filling;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $filling = Filling::find(52);
-    print_r(FillingController::removeImage($filling->image));
-    // return view('welcome');
+Route::get('/', [SiteController::class, 'index']);
+Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
+
+Route::prefix('/cart')->name('cart.')->group(function(){
+  Route::get('/index', [CartController::class, 'index'])->name('index');
+  Route::post('/add/{filling}', [CartController::class, 'add'])->name('add');
 });
+
+Route::get('/test', function(){
+  $filling = Filling::find(1);
+  print_r($filling->type()->weight_quantity);
+});
+

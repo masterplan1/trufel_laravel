@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  .p-navbar-item {
+    @apply py-3 px-2 lg:px-4;
+  }
+  .button {
+    @apply mx-auto my-3 px-12 py-2 shadow bg-red-200 text-white hover:border-red-200 cursor-pointer 
+    transition-colors text-xl border-gray-500 rounded-full
+  }
+}
+
+@font-face {
+  font-family: "Alice";
+  src: url("/public/fonts/Alice-Regular.ttf")
+}
+@font-face {
+  font-family: "MarckScript";
+  src: url("/public/fonts/MarckScript-Regular.ttf")
+}
+@font-face {
+  font-family: "AmaticSC";
+  src: url("/public/fonts/AmaticSC-Regular.ttf")
+}
+@font-face {
+  font-family: "Caveat";
+  src: url("/public/fonts/Caveat-VariableFont_wght.ttf")
+}
+@font-face {
+  font-family: "BadScript";
+  src: url("/public/fonts/BadScript-Regular.ttf")
+}
+@font-face {
+  font-family: "Kurale";
+  src: url("/public/fonts/Kurale-Regular.ttf")
+}

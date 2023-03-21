@@ -8,7 +8,7 @@
       >Додати Начинку
       </button>
     </div>
-    <div class="bg-white p-4 rounded-lg shadow">
+    <div class="bg-white p-4 rounded-lg shadow animate-fade-in-down">
       <div class="flex justify-between border-b-2 pb-3">
         <div class="flex items-center">
           <span class="whitespace-nowrap">на сторінці, шт</span>
@@ -56,9 +56,10 @@
               <TableHeaderCell field="updated_at" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">Оновлено</TableHeaderCell>
               <th class="border-b-2 p-2 text-left cursor-pointer bg-gray-100" >Дії</th>
             </tr>
-          </thead>
+        </thead>
           <tbody>
-            <tr v-for="filling of fillings.data" :key="filling.id">
+            <tr v-for="(filling, index) of fillings.data" :key="filling.id" class="animate-fade-in-down" 
+              :style="{'animation-delay': `${index*0.05}s`}">
               <td class="border-b p-2">{{ filling.id }}</td>
               <td class="border-b p-2">
                 <img :src="filling.image" class="w-16" :alt="filling.title">
@@ -109,7 +110,7 @@
           </nav>
         </div>
       </template>
-      <FillingModal v-model="isModalOpen" :filling="fillingModal" @closeModal="closeModal"/>
+      <FillingModal v-model="isModalOpen" :filling="fillingModal" @closeModal="closeModal" @get-fillings="getFillings({})"/>
     </div>
   </div>
 </template>
@@ -154,12 +155,15 @@ function editHandler(id){
     })
 }
 function deleteHandler(id){
-  store.dispatch('removeFilling', id)
+  if(confirm('Видалити начинку?')){
+    store.dispatch('removeFilling', id)
     .then(() => {
-      getFillings({page: page[1]})
+      getFillings({})
     })
+  }
 }
 function getFillings(payload){
+  console.log('get fillings')
   store.dispatch('getFillings', {
     ...payload , 
     perPage: perPage.value, 

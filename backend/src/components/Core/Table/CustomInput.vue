@@ -48,7 +48,6 @@
           :required="required"
           :value="props.modelValue"
           @input="emit('update:modelValue', $event.target.value)"
-          class="text-green-500 overflow-hidden"
           :class="inputClasses"
         >
           <option v-if="selectTitle" value="" disabled>{{ selectTitle }}</option>

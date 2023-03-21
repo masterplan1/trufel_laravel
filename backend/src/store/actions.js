@@ -68,3 +68,9 @@ export function getFilling({}, id){
   return axiosClient.get(`/filling/${id}`)
 }
 
+export function removeFilling({commit}, id){
+  return axiosClient.delete(`/filling/${id}`)
+}
+
+
+
