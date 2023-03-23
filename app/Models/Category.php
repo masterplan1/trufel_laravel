@@ -14,4 +14,7 @@ class Category extends Model
     public function type(){
         return $this->belongsTo(Type::class);
     }
+    public function fillings(){
+        return $this->hasMany(Filling::class);
+    }
 }

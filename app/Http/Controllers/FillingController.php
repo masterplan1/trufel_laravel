@@ -12,6 +12,13 @@ class FillingController extends Controller
         $fillings = $type->fillings;
         $categories = $type->categories;
         $type = $type->withoutRelations();
+
+        // echo '<pre>';
+        // print_r($categories[3]->fillings[0]);
+        // exit;
+        if($type->is_candybar){
+            return view('candybar', compact('fillings', 'categories', 'type'));
+        }
         return view('filling', compact('fillings', 'categories', 'type'));
     }
 }

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :is_not_title_page="false">
     <section class="max-w-6xl m-auto relative">
         <div class="pt-24 pb-32 text-center m-auto">
           <h1 class="font-caveat text-4xl sm:text-5xl">Вітаємо тебе у майстерні</h1>

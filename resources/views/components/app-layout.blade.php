@@ -1,3 +1,5 @@
+@props(['is_not_title_page' => true])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -7,9 +9,14 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ config('app.name', 'Trufel') }}</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <style>
+    [x-cloak] {
+      display: none !important;
+    }
+  </style>
 </head>
 
-<body x-data="index" class="font-alice text-gray-600 flex flex-col">
+<body x-data="" @class(['font-alice', 'text-gray-600', 'flex', 'flex-col', 'h-screen' => $is_not_title_page])>
   @if (Request::is('/'))
     @include('layouts.navigation-title')
   @else

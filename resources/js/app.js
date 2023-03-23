@@ -19,17 +19,67 @@ document.addEventListener('alpine:init', () => {
       this.openModal = true
       this.totalAmount = this.getActualAmount(filling)
       this.totalPrice = filling.unit_price * this.getActualAmount(filling)
-    },
+     },
     
 })
 
 
 
-  Alpine.data('index', () => ({
-    
+  Alpine.data('handleCart', (filling) => ({
+    filling,
+    candybarFillingId: null,
+    getHeaderTitle(){
+      return this.filling.category.type.is_candybar ? this.filling.category.name : this.filling.category.type.name
+    },
+    getFillingTitle(){
+      return this.filling.category.type.is_candybar ? this.filling.category.name : this.filling.title
+    },
+    handleWeightIncrease(){
+      this.filling.weight = +this.filling.weight + 0.5
+      post(filling.updateUrl, {
+        'totalAmount': this.filling.quantity,
+      }).then(res => this.$dispatch('cart-change', {count: res.count}))
+    },
+    handleWeightDecrease(){
+      if(this.filling.weight > this.filling.min_weight){
+        this.filling.weight = +this.filling.weight - 0.5
+        post(filling.updateUrl, {
+          'totalAmount': this.filling.quantity,
+        }).then(res => this.$dispatch('cart-change', {count: res.count}))
+      }
+    },
+    handleQuantityIncrease(){
+      this.filling.quantity = +this.filling.quantity + 1
+      post(filling.updateUrl, {
+        'totalAmount': this.filling.quantity,
+      }).then(res => this.$dispatch('cart-change', {count: res.count}))
+    },
+    handleQuantityDecrease(){
+      if(this.filling.quantity > this.filling.min_quantity){
+        this.filling.quantity = +this.filling.quantity - 1
+        post(filling.updateUrl, {
+          'totalAmount': this.filling.quantity,
+        }).then(res => this.$dispatch('cart-change', {count: res.count}))
+      }
+    },
+    removeItemFromCart(){
+      post(filling.removeUrl, {
+        'totalAmount': this.filling.quantity,
+      }).then(res => {
+        this.$dispatch('cart-change', {count: res.count})
+        this.cartItems = this.cartItems.filter(i => i.id !== this.filling.id)
+      })
+    },
+    handleFillingSelecet(){
+      post(filling.changeUrl, {'new_filling_id': this.candybarFillingId})
+    }
   }))
 
   Alpine.data('modal', () => ({
+      candybarFillingId: null,
+    // this?.$store.cart.currentFilling.fillings[0]
+    // candybarFillingId: this?.$store.cart.currentFilling.type?.is_candybar ? 
+    //   this?.$store.cart.currentFilling.fillings[0].id : null,
     isShownGoToCart: false,
     closeModal(){
       this.$store.cart.openModal = false
@@ -56,16 +106,20 @@ document.addEventListener('alpine:init', () => {
       }
     },
     addToCart(){
-      post('/cart/add/'+this.$store.cart.currentFilling.id, {
+      if(this.$store.cart.currentFilling.type.is_candybar && this.candybarFillingId === null){
+        this.candybarFillingId = this.$store.cart.currentFilling.fillings[0].id
+      }
+      const id = this.candybarFillingId ?? this.$store.cart.currentFilling.id
+      post('/cart/add/'+id, {
         totalAmount: this.$store.cart.totalAmount,
-        totalPrice: this.$store.cart.totalPrice,
+        // totalPrice: this.$store.cart.totalPrice,
       })
         .then(res => {
           this.$dispatch('cart-change', {count: res.count})
           this.isShownGoToCart = true
           console.log(res)
         })
-    }
+    },
   }))
   
 })
