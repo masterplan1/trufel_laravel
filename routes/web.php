@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FillingController;
 use App\Http\Controllers\SiteController;
 use App\Models\Filling;
+use App\Models\Type;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index']);
 Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
+Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
 
 Route::prefix('/cart')->name('cart.')->group(function(){
   Route::get('/index', [CartController::class, 'index'])->name('index');
@@ -29,7 +31,14 @@ Route::prefix('/cart')->name('cart.')->group(function(){
 });
 
 Route::get('/test', function(){
-  $filling = Filling::find(1);
-  print_r($filling->type()->weight_quantity);
+  $type = Type::find(1);
+  // $type = Type::where('id', 1)->with(['fillings' => fn($query) => $query->limit(5)])->get();
+  echo '<pre>';
+  // print_r($type->fillings(10)->get());
+  print_r(count($type->fillings));
+  // foreach($type[0]->fillings as $item){
+  //   echo '<pre>';
+  //   print_r($item->title);
+  // }
 });
 
