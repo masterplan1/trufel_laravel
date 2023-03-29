@@ -22,7 +22,7 @@
   @else
     @include('layouts.navigation-general')
   @endif
-  <main class="mb-auto mx-auto max-w-6xl">
+  <main class="mb-auto mx-auto max-w-5xl">
    {{ $slot }}
   </main>
   @include('layouts.footer')

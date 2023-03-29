@@ -10,24 +10,24 @@
           </div>
           <img class="w-[240px] h-[240px] rounded-md object-cover" :src="$store.cart.currentFilling.image" alt="">
           <div class="sm:ml-16 p-4">
-            <h3 class="font-caveat text-center text-5xl text-red-800 mb-4" x-text="$store.cart.currentFilling.type?.name"></h3>
+            <h3 class="font-caveat text-center text-5xl text-red-800 mb-4" x-text="$store.cart.currentFilling.type_name"></h3>
             <div class="flex gap-1 sm:gap-6">
               <div class="hidden lg:block">
                 <p class="mb-3 p-1">Начинка</span></p>
                 <p  @click="console.log(candybarFillingId)">Кількість</p>
               </div>
               <div>
-                <template x-if="$store.cart.currentFilling.type?.is_candybar == 0">
+                <template x-if="$store.cart.currentFilling.type_is_candybar == 0">
                   <p class="bg-red-100 p-1 rounded mb-3 w-full overflow-hidden" x-text="$store.cart.currentFilling.title"></p>
                 </template>
-                <template x-if="$store.cart.currentFilling.type?.is_candybar == 1">
-                  <select x-model="candybarFillingId" class="bg-red-100 p-1 rounded mb-3 w-full overflow-hidden">
+                <template x-if="$store.cart.currentFilling.type_is_candybar == 1">
+                  <select :disabled="isCandybarSelectDisabled" x-model="candybarFillingId" class="bg-red-100 p-1 rounded mb-3 w-full overflow-hidden">
                     <template x-for="filling in $store.cart.currentFilling.fillings" :key="filling.id">
                       <option :value="filling.id" x-text="filling.title"></option>
                     </template>
                   </select>
                 </template>
-                <template x-if="$store.cart.currentFilling.type?.weight_quantity === 'weight'">
+                <template x-if="$store.cart.currentFilling.type_weight_quantity === 'weight'">
                   <div class="flex mb-3">
                     <span class="block mr-3 lg:hidden">Кількість</span>
                     <div class="px-3 bg-red-100 flex gap-4 mr-4 rounded">
@@ -38,7 +38,7 @@
                     <p>кг.</p>
                   </div>
                 </template>
-                <template x-if="$store.cart.currentFilling.type?.weight_quantity === 'quantity'">
+                <template x-if="$store.cart.currentFilling.type_weight_quantity === 'quantity'">
                   <div class="flex mb-3">
                     <span class="block mr-3 lg:hidden">Кількість</span>
                     <div class="px-3 bg-red-100 flex gap-4 mr-4 rounded">
@@ -64,7 +64,7 @@
                 <button @click="addToCart" class="button px-6">Додати до кошика</button>
               </template>
               <template x-if="isShownGoToCart">
-                <a href="{{ route('cart.index') }}" @click="addToCart" class="cursor-pointer block text-xl px-6 text-gray-600 decoration-slate-500 underline">
+                <a href="{{ route('cart.index') }}" class="cursor-pointer block text-xl px-6 text-gray-600 decoration-slate-500 underline">
                   Перейти до кошика
                 </a>
               </template>

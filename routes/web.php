@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [SiteController::class, 'index']);
 Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
 Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
+Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
 
 Route::prefix('/cart')->name('cart.')->group(function(){
   Route::get('/index', [CartController::class, 'index'])->name('index');

@@ -2,6 +2,8 @@ import './bootstrap';
 import { get, post } from './http'
 
 import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect'
+Alpine.plugin(intersect)
 window.Alpine = Alpine;
 
 const OFFSET_STEP = 6;
@@ -13,13 +15,15 @@ document.addEventListener('alpine:init', () => {
     totalPrice: null,
     totalAmount: null,
     getActualAmount(param) {
-      return param.type.weight_quantity === 'weight' ? param.min_weight : param.min_quantity;
+      return param.type_weight_quantity === 'weight' ? param.min_weight : param.min_quantity;
     },
     handleOpenModal(filling) {
+      console.log(filling)
       this.currentFilling = filling
       this.openModal = true
       this.totalAmount = this.getActualAmount(filling)
       this.totalPrice = filling.unit_price * this.getActualAmount(filling)
+      console.log(filling)
     },
 
   })
@@ -78,6 +82,7 @@ document.addEventListener('alpine:init', () => {
 
   Alpine.data('modal', () => ({
     candybarFillingId: null,
+    isCandybarSelectDisabled: false,
     // this?.$store.cart.currentFilling.fillings[0]
     // candybarFillingId: this?.$store.cart.currentFilling.type?.is_candybar ? 
     //   this?.$store.cart.currentFilling.fillings[0].id : null,
@@ -85,6 +90,7 @@ document.addEventListener('alpine:init', () => {
     closeModal() {
       this.$store.cart.openModal = false
       this.isShownGoToCart = false
+      this.isCandybarSelectDisabled = false
     },
     plusItemWeight() {
       this.$store.cart.totalAmount = +this.$store.cart.totalAmount + 0.5
@@ -107,7 +113,7 @@ document.addEventListener('alpine:init', () => {
       }
     },
     addToCart() {
-      if (this.$store.cart.currentFilling.type.is_candybar && this.candybarFillingId === null) {
+      if (this.$store.cart.currentFilling.type_is_candybar && this.candybarFillingId === null) {
         this.candybarFillingId = this.$store.cart.currentFilling.fillings[0].id
       }
       const id = this.candybarFillingId ?? this.$store.cart.currentFilling.id
@@ -118,38 +124,56 @@ document.addEventListener('alpine:init', () => {
         .then(res => {
           this.$dispatch('cart-change', { count: res.count })
           this.isShownGoToCart = true
+          this.isCandybarSelectDisabled = true
           console.log(res)
         })
     },
   }))
 
-  Alpine.data('fillingItem', (fillings, type_id) => ({
+  Alpine.data('fillingItem', (fillings, type, countItems) => ({
     fillings,
+    countItems,
     categoryWasSelected: false,
     additionFillings: [],
-    type_id,
+    type_id: type.id,
     categoryId: 0,
     offset: OFFSET_STEP,
+    activeClassCategory: null,
+    countHandler(){
+      console.log(this.countItems, Object.keys(this.fillings).length, this.additionFillings.length)
+      console.log(this.countItems > Object.keys(this.fillings).length + this.additionFillings.length)
+      return this.countItems > Object.keys(this.fillings).length + this.additionFillings.length
+    },
+    prepareFillingForCandybar(item){
+      return item.fillings[Object.keys(item.fillings)[0]]
+    },
     addFillings() {
-      post('/add-fillings/' + type_id, {
+      const url = type.is_candybar === 0 ? '/add-fillings/' : '/add-categories/'
+      post(url + this.type_id, {
         offset: this.offset,
         category_id: this.categoryId
       })
         .then(res => {
           this.offset += OFFSET_STEP
-          this.additionFillings = [...this.additionFillings, ...res]
-          console.log(res)
+          this.additionFillings = [...this.additionFillings, ...res.fillings]
+          this.countItems = res.items_count === 0 ? countItems : res.items_count
+          console.log(this.additionFillings)
         })
     },
-    selectCategory(id) {
-      if (this.categoryId !== id) {
+    selectCategory(id, key = null) {
+      if (this.categoryId !== id && type.is_candybar === 0) {
         this.categoryWasSelected = true
-        // todo active category font
+        this.fillings = {}
         this.categoryId = id
         this.additionFillings = []
         this.offset = 0
         this.addFillings()
+        this.activeClassCategory = key
       }
+    },
+    chooseWeightQuantity(f){
+      const isWeight = f.type_weight_quantity === 'weight'
+      return isWeight ? `${f.min_weight} кг` : `${f.min_quantity} шт`
     }
   }))
 })
