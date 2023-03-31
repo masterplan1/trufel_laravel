@@ -13,4 +13,7 @@ bg-gradient-to-r from-transparent to-white">
     Скуштувавши це, ви залишитеся   з нами назавжди!
   </p>
 </div>
+
+
+
 </div>

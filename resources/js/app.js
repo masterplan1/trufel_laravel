@@ -1,8 +1,11 @@
 import './bootstrap';
 import { get, post } from './http'
+import flatpickr from "flatpickr";
 
 import Alpine from 'alpinejs';
+import Mask from "@ryangjchandler/alpine-mask";
 import intersect from '@alpinejs/intersect'
+Alpine.plugin(Mask);
 Alpine.plugin(intersect)
 window.Alpine = Alpine;
 
@@ -28,7 +31,13 @@ document.addEventListener('alpine:init', () => {
 
   })
 
-
+  Alpine.data('orderItem', (time) => ({
+    init(){
+      flatpickr("#datePickerId", {
+        minDate: time
+      })
+    },
+  }))
 
   Alpine.data('handleCart', (filling) => ({
     filling,

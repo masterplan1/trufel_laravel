@@ -23,7 +23,7 @@ class FillingController extends Controller
         $fillings = $type->fillings;
         $categories = $type->categories;
         $total_item_count = $type->fillings(null)->count();
-        return view('filling', compact('fillings', 'categories', 'type', 'total_item_count'));
+        return view('filling.index', compact('fillings', 'categories', 'type', 'total_item_count'));
     }
 
     public function addFillings(Request $request, Type $type)
