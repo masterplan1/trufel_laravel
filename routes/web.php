@@ -1,11 +1,15 @@
 <?php
 
+use App\Events\OrderStore;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FillingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SiteController;
+use App\Http\Helpers\Telegram;
 use App\Models\Filling;
+use App\Models\Order;
 use App\Models\Type;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +29,7 @@ Route::get('/filling/{type}', [FillingController::class, 'index'])->name('fillin
 Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
 Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
 
-Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::get('/order', [OrderController::class, 'index'])->middleware('order.cart.empty')->name('order.index');
 Route::post('/order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
 
 Route::prefix('/cart')->name('cart.')->group(function(){
@@ -35,16 +39,17 @@ Route::prefix('/cart')->name('cart.')->group(function(){
   Route::post('/remove/{filling}', [CartController::class, 'remove'])->name('remove');
 });
 
-Route::get('/test', function(){
-  // $type = Type::find(1);
-  // $type = Type::where('id', 1)->with(['fillings' => fn($query) => $query->limit(5)])->get();
-  echo '<pre>';
-  // print_r($type->fillings(10)->get());
-  // $asd = (new \DateTime('tomorrow + 2day'))->format('Y-m-d');
-  // print_r($asd);
-  // foreach($type[0]->fillings as $item){
-  //   echo '<pre>';
-  //   print_r($item->title);
-  // }
+Route::get('/test', function(Telegram $telegram){
+  // $order = Order::find(7);
+  // $orderItemsTemp = $order->orderItems()->get()->toArray();
+  //           $orderItems = Arr::pluck($orderItemsTemp, 'filling_id');
+  //           $fillings = Filling::whereIn('id', $orderItems)->get()->toArray();
+  //           $fillings = Arr::keyBy($fillings, 'id');
+  // OrderStore::dispatch($order);
+  // echo '<pre>';
+  // $a = $orderItemsTemp[2]['weight'];
+  // var_dump($orderItemsTemp);
+  // print_r('asd');
+  // Telegram::sendMessage('asdadads');
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Events\OrderStore;
 use App\Http\Helpers\Cart;
 use App\Models\Filling;
 use App\Models\Order;
@@ -53,6 +54,7 @@ class OrderController extends Controller
         // clear cookies
         Cookie::queue(Cookie::forget('cart_items'));
         // to do telegram notification
+        OrderStore::dispatch($order);
         return redirect('/')->with('message', 'Ваше замовлення створено!');
     }
 

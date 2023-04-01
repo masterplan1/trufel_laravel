@@ -29,4 +29,9 @@ class Cart
   {
     return count($cartItems);
   }
+  
+  public static function isEmptyCart()
+  {
+    return count(self::getCartItems()) < 1;
+  }
 }
