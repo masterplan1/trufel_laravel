@@ -7,5 +7,10 @@ export const state = {
     loading: false,
     data: [],
     links: {}
+  },
+  products: {
+    loading: false,
+    data: [],
+    links: {}
   }
 }

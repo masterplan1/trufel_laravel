@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Image;
 use App\Http\Requests\CreateFillingRequest;
 use App\Http\Requests\UpdateFillingRequest;
 use App\Http\Resources\FillingListResource;
@@ -54,7 +55,7 @@ class FillingController extends Controller
         /** @var \Illuminate\Http\UploadedFile $image */
         $image = $data['image'] ?? null;
         if($image){
-            $relativePath = $this->saveImage($image);
+            $relativePath = Image::saveImage($image);
             $data['image'] = URL::to(Storage::url($relativePath));
         }
         $filling = Filling::create($data);
@@ -81,11 +82,11 @@ class FillingController extends Controller
         if($image){
             $oldImage = $filling->image;
 
-            $relativePath = $this->saveImage($image);
+            $relativePath = Image::saveImage($image);
             $data['image'] = URL::to(Storage::url($relativePath));
 
             if($oldImage){
-                $this->removeImage($oldImage);
+                Image::removeImage($oldImage);
             }
 
         }
@@ -98,31 +99,33 @@ class FillingController extends Controller
      */
     public function destroy(Filling $filling)
     {
+        // $this->removeImage($filling->image);
+        Image::removeImage($filling->image);
         $filling->delete();
         return response()->noContent();
     }
 
-    private function saveImage(UploadedFile $image)
-    {
-        $path = '/images/' . Str::random() . '-' . time();
-        $public_path = '/public' . $path;
-        if(!Storage::exists($public_path)){
-            Storage::makeDirectory($public_path, 0755, true);
-        }
-        if(!Storage::putFileAs($public_path, $image, $image->getClientOriginalName())){
-            throw new Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
-        }
-        return $path . '/' . $image->getClientOriginalName();
-    }
+    // private function saveImage(UploadedFile $image)
+    // {
+    //     $path = '/images/' . Str::random() . '-' . time();
+    //     $public_path = '/public' . $path;
+    //     if(!Storage::exists($public_path)){
+    //         Storage::makeDirectory($public_path, 0755, true);
+    //     }
+    //     if(!Storage::putFileAs($public_path, $image, $image->getClientOriginalName())){
+    //         throw new Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
+    //     }
+    //     return $path . '/' . $image->getClientOriginalName();
+    // }
 
-    private function removeImage($image){
-        $a = explode('/', $image);
-        if(is_array($a) && count($a) > 4){
-            $path = 'public/' . implode('/', [$a[4], $a[5], $a[6]]);
-            if(Storage::exists($path)){
-                Storage::deleteDirectory($path);
-                return true;
-            }
-        }
-    }
+    // private function removeImage($image){
+    //     $a = explode('/', $image);
+    //     if(is_array($a) && count($a) > 4){
+    //         $path = 'public/' . implode('/', [$a[4], $a[5], $a[6]]);
+    //         if(Storage::exists($path)){
+    //             Storage::deleteDirectory($path);
+    //             return true;
+    //         }
+    //     }
+    // }
 }

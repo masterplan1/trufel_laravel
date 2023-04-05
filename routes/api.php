@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\FillingController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/filling', FillingController::class);
+    Route::apiResource('/product', ProductController::class);
 
 
     Route::get('/type', [TypeController::class, 'index']);
