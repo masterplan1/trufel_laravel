@@ -17,6 +17,9 @@ class Type extends Model
     public function fillings($limit = 6){
         return $this->hasManyThrough(Filling::class, Category::class)->limit($limit);
     }
+    public function products($limit = 6){
+        return $this->hasManyThrough(Product::class, Category::class)->limit($limit);
+    }
     // public function fillings($limit = 6, $offset = 0){
     //     return $this->hasManyThrough(Filling::class, Category::class)->offset($offset)->limit($limit);
     // }

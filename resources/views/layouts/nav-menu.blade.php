@@ -117,11 +117,9 @@
             </span>
           </a>
           <ul x-cloak x-show="openGalleryMenu" x-transition class="absolute left-1 bg-amber-50 text-left text-xl">
-            <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="/">Торти</a></li>
-            <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="/">Капкейки</a></li>
-            <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="/">Бенто</a></li>
-            <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="/">Кендібар</a></li>
-            <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="/">Дієтичні десерти</a></li>
+            @foreach ($types as $type)
+              <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
+            @endforeach
           </ul>
         </li>
         <li class="relative cursor-pointer">

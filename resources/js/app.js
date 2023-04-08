@@ -128,7 +128,6 @@ document.addEventListener('alpine:init', () => {
       const id = this.candybarFillingId ?? this.$store.cart.currentFilling.id
       post('/cart/add/' + id, {
         totalAmount: this.$store.cart.totalAmount,
-        // totalPrice: this.$store.cart.totalPrice,
       })
         .then(res => {
           this.$dispatch('cart-change', { count: res.count })
@@ -149,8 +148,6 @@ document.addEventListener('alpine:init', () => {
     offset: OFFSET_STEP,
     activeClassCategory: null,
     countHandler(){
-      console.log(this.countItems, Object.keys(this.fillings).length, this.additionFillings.length)
-      console.log(this.countItems > Object.keys(this.fillings).length + this.additionFillings.length)
       return this.countItems > Object.keys(this.fillings).length + this.additionFillings.length
     },
     prepareFillingForCandybar(item){
@@ -177,6 +174,50 @@ document.addEventListener('alpine:init', () => {
         this.additionFillings = []
         this.offset = 0
         this.addFillings()
+        this.activeClassCategory = key
+      }
+    },
+    chooseWeightQuantity(f){
+      const isWeight = f.type_weight_quantity === 'weight'
+      return isWeight ? `${f.min_weight} кг` : `${f.min_quantity} шт`
+    }
+  }))
+
+  Alpine.data('productItem', (products, type, countItems) => ({
+    products,
+    countItems,
+    categoryWasSelected: false,
+    additionProducts: [],
+    type_id: type.id,
+    categoryId: 0,
+    offset: OFFSET_STEP,
+    activeClassCategory: null,
+    countHandler(){
+      return this.countItems > Object.keys(this.products).length + this.additionProducts.length
+    },
+    prepareProductsForCandybar(item){
+      return item.products[Object.keys(item.products)[0]]
+    },
+    addProducts() {
+      const url = '/add-products/'
+      post(url + this.type_id, {
+        offset: this.offset,
+        category_id: this.categoryId
+      })
+        .then(res => {
+          this.offset += OFFSET_STEP
+          this.additionProducts = [...this.additionProducts, ...res.products]
+          this.countItems = res.items_count === 0 ? countItems : res.items_count
+        })
+    },
+    selectCategory(id, key = null) {
+      if (this.categoryId !== id && type.is_candybar === 0) {
+        this.categoryWasSelected = true
+        this.products = {}
+        this.categoryId = id
+        this.additionProducts = []
+        this.offset = 0
+        this.addProducts()
         this.activeClassCategory = key
       }
     },

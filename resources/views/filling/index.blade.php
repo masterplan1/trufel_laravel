@@ -60,7 +60,7 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10 min-h-[460px] sm:min-h-[400px]">
                 @foreach ($fillings as $filling)
                     <div x-show="!categoryWasSelected" class="px-4 mb-6">
                         <div class="relative">

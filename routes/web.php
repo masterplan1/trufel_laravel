@@ -4,6 +4,7 @@ use App\Events\OrderStore;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FillingController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
 use App\Http\Helpers\Telegram;
 use App\Models\Filling;
@@ -28,6 +29,9 @@ Route::get('/', [SiteController::class, 'index']);
 Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
 Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
 Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
+
+Route::get('/product/{type}', [ProductController::class, 'index'])->name('product');
+Route::post('/add-products/{type}', [ProductController::class, 'addProducts'])->name('add-products');
 
 Route::get('/order', [OrderController::class, 'index'])->middleware('order.cart.empty')->name('order.index');
 Route::post('/order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');

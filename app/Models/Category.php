@@ -17,4 +17,7 @@ class Category extends Model
     public function fillings(){
         return $this->hasMany(Filling::class);
     }
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }

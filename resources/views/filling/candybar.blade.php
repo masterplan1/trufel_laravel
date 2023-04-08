@@ -40,7 +40,7 @@
             ),
         ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-10 sm:mt-20">
           
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10 min-h-[460px] sm:min-h-[400px]">
                 @foreach ($categories as $category)
                     <div class="px-4 mb-6">
                         <div class="relative">
