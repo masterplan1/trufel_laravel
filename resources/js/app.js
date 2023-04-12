@@ -92,9 +92,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('modal', () => ({
     candybarFillingId: null,
     isCandybarSelectDisabled: false,
-    // this?.$store.cart.currentFilling.fillings[0]
-    // candybarFillingId: this?.$store.cart.currentFilling.type?.is_candybar ? 
-    //   this?.$store.cart.currentFilling.fillings[0].id : null,
+
     isShownGoToCart: false,
     closeModal() {
       this.$store.cart.openModal = false
@@ -192,6 +190,10 @@ document.addEventListener('alpine:init', () => {
     categoryId: 0,
     offset: OFFSET_STEP,
     activeClassCategory: null,
+    // modal
+    closeModalClicked: false,
+    modalWindow: document.getElementById('zoomModal'),
+    modalImg: document.getElementById('zoomImg'),
     countHandler(){
       return this.countItems > Object.keys(this.products).length + this.additionProducts.length
     },
@@ -221,9 +223,16 @@ document.addEventListener('alpine:init', () => {
         this.activeClassCategory = key
       }
     },
-    chooseWeightQuantity(f){
-      const isWeight = f.type_weight_quantity === 'weight'
-      return isWeight ? `${f.min_weight} кг` : `${f.min_quantity} шт`
+    zoomImage(el){
+      this.closeModalClicked = false
+      const currentImg = el.parentElement.nextElementSibling
+      this.modalWindow.style.display = 'block'
+      this.modalImg.src = currentImg.src
+      this.modalImg.alt = currentImg.alt
+    },
+    closeZoomModal(){
+      this.closeModalClicked = true
+      setTimeout(() => this.modalWindow.style.display = 'none', 400)
     }
   }))
 })

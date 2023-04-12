@@ -27,7 +27,7 @@
   class="bg-amber-50 z-20 absolute w-full"
   @cart-change.window="cartChange($event)"
   {{-- @cart-change.window="cartItemsCount = $event.detail.count" --}}
-  x-cloack
+ 
 >
 
   <!-- Mobile Nav -->
@@ -46,7 +46,7 @@
         </a>
         <ul x-show="openMobileGalleryMenu" x-transition class="bg-amber-50 text-left h-[180px] transition-all text-xl overflow-hidden">
           @foreach ($types as $type)
-            <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
+            <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-1 px-6 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
           @endforeach
         </ul>
       </li>
@@ -60,11 +60,9 @@
           </span>
         </a>
         <ul x-show="openMobileOrderMenu" x-transition class="bg-amber-50 text-left h-[180px] transition-all text-xl overflow-hidden">
-          <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="/">Торти</a></li>
-          <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="/">Капкейки</a></li>
-          <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="/">Бенто</a></li>
-          <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="/">Кендібар</a></li>
-          <li class="cursor-pointer hover:bg-amber-100 py-1 transition-colors"><a class="px-6 block" href="/">Дієтичні десерти</a></li>
+          @foreach ($types as $type)
+            <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-1 px-6 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
+          @endforeach
         </ul>
       </li>
       <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="">Контакти</a></li>
@@ -118,7 +116,7 @@
           </a>
           <ul x-cloak x-show="openGalleryMenu" x-transition class="absolute left-1 bg-amber-50 text-left text-xl">
             @foreach ($types as $type)
-              <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
+              <li class="cursor-pointer hover:bg-amber-100  transition-colors"><a class="py-2 px-4 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
             @endforeach
           </ul>
         </li>
@@ -133,7 +131,7 @@
           </a>
           <ul x-cloak x-show="openOrderMenu" x-transition class="absolute left-1 bg-amber-50 text-left text-xl">
             @foreach ($types as $type)
-             <li class="cursor-pointer hover:bg-amber-100 py-2 transition-colors"><a class="px-4 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
+             <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-2 px-4 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
             @endforeach
           </ul>
         </li>
@@ -148,7 +146,7 @@
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
         </svg>
-        <small class="absolute -bottom-1 -left-1 z-10 p-3 w-3 h-3 leading-none text-white text-sm flex items-center justify-center bg-red-400 rounded-full" x-show="cartItemsCount > 0" x-text="cartItemsCount"></small>
+        <small x-cloak class="absolute -bottom-1 -left-1 z-10 p-3 w-3 h-3 leading-none text-white text-sm flex items-center justify-center bg-red-400 rounded-full" x-show="cartItemsCount > 0" x-text="cartItemsCount"></small>
       </a>
     </div>
   </div>

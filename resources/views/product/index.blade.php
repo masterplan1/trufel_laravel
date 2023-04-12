@@ -31,6 +31,7 @@
                 ],
             ),
         ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-10 sm:mt-20">
+        @include('product.modal-zoom')
             @if (count($categories) > 1 && !$type->is_candybar)
                 <div class="flex justify-around gap-4 flex-wrap mb-8 text-center items-center">
                     <div @click="selectCategory(0)"
@@ -56,7 +57,7 @@
                     <div x-show="!categoryWasSelected" class="px-4 mb-6 relative h-[80vw] sm:h-[36vw] lg:h-[300px]">
                         <div
                             class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" @click="zoomImage($el)"
                                 stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -72,7 +73,7 @@
                             <div x-show="shown" x-transition class="px-4 mb-6 relative">
                                 <div
                                     class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" @click="zoomImage($el)"
                                         stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
@@ -84,8 +85,6 @@
                         </div>
                     </template>
                 </template>
-
-
             </div>
             <div x-show="countHandler" class="flex items-center justify-center mb-14">
                 <span class="block border w-full"></span>
