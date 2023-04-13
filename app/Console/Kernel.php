@@ -13,6 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->command('php artisan app:image-optimize')
+        $schedule->command('app:image-optimize')->everyThreeHours();
     }
 
     /**
