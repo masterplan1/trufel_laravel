@@ -21,12 +21,10 @@ document.addEventListener('alpine:init', () => {
       return param.type_weight_quantity === 'weight' ? param.min_weight : param.min_quantity;
     },
     handleOpenModal(filling) {
-      console.log(filling)
       this.currentFilling = filling
       this.openModal = true
       this.totalAmount = this.getActualAmount(filling)
       this.totalPrice = filling.unit_price * this.getActualAmount(filling)
-      console.log(filling)
     },
 
   })
@@ -131,7 +129,6 @@ document.addEventListener('alpine:init', () => {
           this.$dispatch('cart-change', { count: res.count })
           this.isShownGoToCart = true
           this.isCandybarSelectDisabled = true
-          console.log(res)
         })
     },
   }))
@@ -161,7 +158,6 @@ document.addEventListener('alpine:init', () => {
           this.offset += OFFSET_STEP
           this.additionFillings = [...this.additionFillings, ...res.fillings]
           this.countItems = res.items_count === 0 ? countItems : res.items_count
-          console.log(this.additionFillings)
         })
     },
     selectCategory(id, key = null) {
@@ -236,5 +232,91 @@ document.addEventListener('alpine:init', () => {
     }
   }))
 })
+
+Alpine.data('testimonialItem', (itemsCount) => ({
+  newComments: [],
+  wasCommentSent: false,
+  isFormOpened: false,
+  itemsCount,
+  formData: {
+    author_name: null,
+    estimation: null,
+    description: null
+  },
+  mouseOver: {
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false
+  },
+  animationStep: 0,
+  animationItemWidth: 288,
+  param: 3,
+  init(){
+    const width = window.innerWidth
+    const widthLg = 1024
+    if(width <= widthLg){
+      this.param = 1
+    }
+  },
+  increaseAnimationStep(){
+    if(this.itemsCount > this.animationStep + this.param){
+      this.animationStep++
+    }
+  },
+  decreaseAnimationStep(){
+    if(this.animationStep > 0){
+      this.animationStep--
+    }
+  },
+  starMouseLeave(index){
+    if(!this.formData.estimation){
+      for (var key in this.mouseOver) {
+        this.mouseOver[key] = false
+      }
+    } else if(index > this.formData.estimation) {
+      this.mouseOver[index] = false
+      for (var key in this.mouseOver) {
+        if(this.formData.estimation < key)
+        this.mouseOver[key] = false
+      }
+    }
+  },
+  starMouseEnter(index){
+    for (var key in this.mouseOver) {
+      if(key <= index)
+      this.mouseOver[key] = true
+    }
+  },
+  chooseEstimation(index){
+    this.formData.estimation = index
+    for (var key in this.mouseOver) {
+      if(this.formData.estimation < key)
+      this.mouseOver[key] = false
+    }
+  },
+  formSubmit(){
+    if(this.checkValidation()){
+      post('/testimonial/create', {...this.formData})
+        .then(data => {
+          this.newComments.push(data)
+          this.itemsCount++
+          this.isFormOpened = false
+          this.formData = {
+            author_name: null,
+            estimation: null,
+            description: null
+          }
+        })
+    }
+  },
+  checkValidation(){
+    return true
+  },
+  checkEstimation(estimation, item){
+    return 'none'
+  }
+}))
 
 Alpine.start();

@@ -1,26 +1,11 @@
 <x-app-layout>
     <section class="font-kurale text-center ">
-        <div class="pt-28  relative">
-            <h1 class="font-amatic  text-7xl mb-4">{{ $type->name }}</h1>
-            <p class="hidden sm:block font-caveat text-3xl max-w-[60%] m-auto text-red-300">*тут ви можете переглянути
-                можливі варіанти начинок
-                для солодощів і вибрати собі щось за смаком.
-            </p>
-            <div class="hidden lg:block">
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 top-16 left-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-75 rotate-12 top-16 right-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 -rotate-45 -bottom-12 left-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 rotate-90 -bottom-12 right-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute -scale-50 rotate-90 bottom-4 left-24 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute -scale-50 bottom-4 right-24 w-32 h-36"></span>
-            </div>
-        </div>
+        <x-title>
+            <x-slot:title>
+                {{ $type->name }}
+                </x-slot>
+                *тут ви можете обрати оформлення за вподобанням
+        </x-title>
         <div x-data="productItem({{ json_encode(
             $products->mapWithKeys(
                 fn($product, $key) => [
@@ -31,7 +16,7 @@
                 ],
             ),
         ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-10 sm:mt-20">
-        @include('product.modal-zoom')
+            @include('product.modal-zoom')
             @if (count($categories) > 1 && !$type->is_candybar)
                 <div class="flex justify-around gap-4 flex-wrap mb-8 text-center items-center">
                     <div @click="selectCategory(0)"
@@ -52,19 +37,18 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10 min-h-[460px] sm:min-h-[400px]" >
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10 min-h-[460px] sm:min-h-[400px]">
                 @foreach ($products as $product)
                     <div x-show="!categoryWasSelected" class="px-4 mb-6 relative h-[80vw] sm:h-[36vw] lg:h-[300px]">
                         <div
                             class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" @click="zoomImage($el)"
-                                stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                @click="zoomImage($el)" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </div>
-                        <img class="w-full h-full rounded-md object-cover"
-                            src="{{ $product->image }}" alt="">
+                        <img class="w-full h-full rounded-md object-cover" src="{{ $product->image }}" alt="">
                     </div>
                 @endforeach
                 <template x-if="additionProducts.length">
@@ -73,8 +57,9 @@
                             <div x-show="shown" x-transition class="px-4 mb-6 relative">
                                 <div
                                     class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" @click="zoomImage($el)"
-                                        stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        @click="zoomImage($el)" stroke-width="1.5" stroke="currentColor"
+                                        class="w-12 h-12">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                                     </svg>

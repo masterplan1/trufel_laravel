@@ -2,6 +2,7 @@
 
 use App\Events\OrderStore;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FillingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -29,6 +30,11 @@ Route::get('/', [SiteController::class, 'index']);
 Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
 Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
 Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
+
+Route::get('/contacts', [SiteController::class, 'contacts'])->name('contacts');
+
+Route::get('/testimonials', [CommentController::class, 'testimonials'])->name('testimonials');
+Route::post('/testimonial/create', [CommentController::class, 'addTestimonial'])->name('create-testimonial');
 
 Route::get('/product/{type}', [ProductController::class, 'index'])->name('product');
 Route::post('/add-products/{type}', [ProductController::class, 'addProducts'])->name('add-products');

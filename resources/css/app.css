@@ -15,8 +15,8 @@
     @apply py-3 px-2 lg:px-4;
   }
   .button {
-    @apply mx-auto my-3 px-12 py-2 shadow bg-red-200 text-white hover:border-red-200 cursor-pointer 
-    transition-colors text-xl border-gray-500 rounded-full
+    @apply mx-auto my-3 px-12 py-1 shadow bg-red-200 text-white hover:border-red-200 cursor-pointer 
+    transition-colors text-lg border-gray-500 rounded-full
   }
 }
 

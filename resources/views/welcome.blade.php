@@ -26,10 +26,7 @@
             </p>
           </div>
         </div>
-        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute top-1 left-1 w-32 h-36"></span>
-        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute top-1 left-1 w-32 h-36"></span>
-        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-75 rotate-12 top-1 right-1 w-32 h-36"></span>
-        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-90 -rotate-45 bottom-1 left-1 w-32 h-36"></span>
-        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 rotate-90 bottom-1 right-1 w-32 h-36"></span>
+        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] opacity-20 absolute top-1 left-1 w-32 h-36"></span>
+        <span class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] opacity-20 absolute scale-75 rotate-12 top-1 right-1 w-32 h-36"></span>
       </section>
 </x-app-layout>

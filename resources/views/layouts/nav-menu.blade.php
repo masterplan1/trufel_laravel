@@ -65,8 +65,8 @@
           @endforeach
         </ul>
       </li>
-      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="">Контакти</a></li>
-      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="">Відгуки</a></li>
+      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="{{ route('contacts') }}">Контакти</a></li>
+      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="{{ route('testimonials') }}">Відгуки</a></li>
     </ul>
   </nav>
   <div class="flex justify-between max-w-5xl m-auto">
@@ -135,8 +135,8 @@
             @endforeach
           </ul>
         </li>
-        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="">Контакти</a></li>
-        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="">Відгуки</a></li>
+        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="{{ route('contacts') }}">Контакти</a></li>
+        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="{{ route('testimonials') }}">Відгуки</a></li>
       </ul>
     </nav>
     <div class="p-navbar-item">

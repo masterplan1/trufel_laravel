@@ -1,26 +1,13 @@
 <x-app-layout>
     <section class="font-kurale text-center">
-        <div class="pt-28  relative">
-            <h1 class="font-amatic  text-7xl mb-4">{{ $type->name }}</h1>
-            <p class="hidden sm:block font-caveat text-3xl max-w-[60%] m-auto text-red-300">*тут ви можете переглянути
+        <x-title>
+            <x-slot:title>
+                {{ $type->name }}
+                </x-slot>
+                *тут ви можете переглянути
                 можливі варіанти начинок
                 для солодощів і вибрати собі щось за смаком.
-            </p>
-            <div class="hidden lg:block">
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 top-16 left-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-75 rotate-12 top-16 right-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 -rotate-45 -bottom-12 left-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute scale-50 rotate-90 -bottom-12 right-1 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute -scale-50 rotate-90 bottom-4 left-24 w-32 h-36"></span>
-                <span
-                    class="bg-[url('/public/img/svg/wellcome-cake-icon.svg')] absolute -scale-50 bottom-4 right-24 w-32 h-36"></span>
-            </div>
-        </div>
+        </x-title>
         <div x-data="fillingItem({{ json_encode(
             $fillings->mapWithKeys(
                 fn($filling, $key) => [

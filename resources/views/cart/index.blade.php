@@ -44,8 +44,8 @@
             </template>
             <template x-if="cartItems.length">
                 <template x-for="cartItem in cartItems" :key="cartItem.id">
-                    <div x-data="handleCart(cartItem)">
-                        <div class="px-4 mb-6 relative flex flex-col items-center sm:flex-row sm:text-2xl">
+                    <div x-data="handleCart(cartItem)" class="lg:w-[750px] mb-10">
+                        <div class="px-4 mb-6 relative flex flex-col items-center justify-between sm:flex-row text-2xl">
                             <div @click="removeItemFromCart"
                                 class="absolute sm:top-0 -top-10 right-1 p-1 rounded cursor-pointer bg-amber-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -67,11 +67,11 @@
                                     <div>
 
                                         <template x-if="!filling.category.type.is_candybar">
-                                            <p class="bg-red-100 p-1 rounded mb-3" x-text="getFillingTitle"></p>
+                                            <p class="bg-red-100 p-1 rounded mb-3 w-[240px] whitespace-nowrap overflow-hidden" x-text="getFillingTitle"></p>
                                         </template>
                                         <template x-if="filling.category.type.is_candybar">
                                             <select @change="handleFillingSelecet" x-model="candybarFillingId"
-                                                class="bg-red-100 p-1 rounded mb-3 w-full overflow-hidden">
+                                                class="bg-red-100 p-1 rounded mb-3 w-[240px] whitespace-nowrap overflow-hidden">
                                                 <template x-for="item in filling.candybar_select_items"
                                                     :key="item.id">
                                                     <option :value="item.id" x-text="item.title"
@@ -88,7 +88,7 @@
                                                 <div class="flex">
                                                     <div class="px-3 bg-red-100 flex gap-4 mr-4 rounded">
                                                         <p class="cursor-pointer" @click="handleWeightIncrease">+</p>
-                                                        <p x-text="filling.weight"></p>
+                                                        <p class="min-w-[40px] text-center" x-text="filling.weight"></p>
                                                         <p class="cursor-pointer" @click="handleWeightDecrease">-</p>
                                                     </div>
                                                     <p>кг.</p>
@@ -98,7 +98,7 @@
                                                 <div class="flex">
                                                     <div class="px-3 bg-red-100 flex gap-4 mr-4 rounded">
                                                         <p class="cursor-pointer" @click="handleQuantityIncrease">+</p>
-                                                        <p x-text="filling.quantity"></p>
+                                                        <p class="min-w-[40px] text-center" x-text="filling.quantity"></p>
                                                         <p class="cursor-pointer" @click="handleQuantityDecrease">-</p>
                                                     </div>
                                                     <p>шт.</p>

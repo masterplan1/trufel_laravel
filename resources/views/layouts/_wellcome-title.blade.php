@@ -1,7 +1,7 @@
 <div class="absolute w-full h-full bottom-0 left-0
 bg-gradient-to-r from-transparent to-white">
 <div class="absolute top-[30%] right-[12%] w-[50%] md:w-[30%] ">
-  <p class="font-amatic sm:text-2xl md:text-6xl md:leading-[60px]">тортики, які створені
+  <p class="font-amatic text-4xl md:text-6xl md:leading-[60px]">тортики, які створені
     з любов’ю 
     <span class="text-red-300 pl-3">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 inline">
@@ -10,7 +10,7 @@ bg-gradient-to-r from-transparent to-white">
     </span>
   </p>
   <p class="mt-10 font-caveat text-2xl md:text-4xl text-red-800">
-    Скуштувавши це, ви залишитеся   з нами назавжди!
+    Скуштувавши1 це, ви залишитеся   з нами назавжди!
   </p>
 </div>
 
