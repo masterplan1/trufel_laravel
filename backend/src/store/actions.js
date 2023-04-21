@@ -109,4 +109,34 @@ export function getTypes(){
   return axiosClient.get('/type')
 }
 
+export function getCategories({commit}, {page = null, perPage = null, search = null, type = null, sort_direction = null, sort_field = null}){
+  commit('setCategoriesLoading', true)
+  return axiosClient.get(`/category`, {
+    params: { per_page: perPage, page, search, type, sort_direction, sort_field }
+  })
+    .then(({data}) => {
+      commit('setCategories', data)
+      commit('setCategoriesLoading', false)
+      return data;
+    })
+}
+
+export function createCategory({commit}, category){
+  return axiosClient.post('/category', category)
+}
+export function updateCategory({commit}, category){
+  const id = category.id;
+  delete category.image
+  category._method = 'PUT'
+  return axiosClient.post(`/category/${id}`, category)
+}
+
+export function getCategory({}, id){
+  return axiosClient.get(`/category/${id}`)
+}
+
+export function removeCategory({commit}, id){
+  return axiosClient.delete(`/category/${id}`)
+}
+
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FillingController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TypeController;
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/filling', FillingController::class);
     Route::apiResource('/product', ProductController::class);
+    Route::apiResource('/category', CategoryController::class);
 
 
     Route::get('/type', [TypeController::class, 'index']);

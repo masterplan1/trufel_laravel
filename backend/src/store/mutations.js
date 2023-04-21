@@ -26,3 +26,11 @@ export function setProducts(state, data){
 export function setProductsLoading(state, loading){
   state.products.loading = loading
 }
+
+export function setCategories(state, data){
+  state.categories.data = data.data
+  state.categories.links = data.meta
+}
+export function setCategoriesLoading(state, loading){
+  state.categories.loading = loading
+}

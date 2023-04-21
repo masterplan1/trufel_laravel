@@ -34,74 +34,65 @@
                 <template v-else>
                     <header  class="px-3 py-4 flex items-center justify-between">
                       <DialogTitle as="h3" class="text-lg leading-6 font-medium text-gray-900">
-                        {{ filling.id ? `Редагувати начинку: ${props.filling.title}` : 'Додати начинку' }}
-                        <!-- {{ filling }} -->
-                        <!-- {{ typeSelected }} -->
-                        <!-- <div class="mt-1" v-if="filling.image && filling.id">
-                          {{ filling.image }}
-                        </div> -->
+                        {{ category.id ? `Редагувати категорію: ${props.category.name}` : 'Додати категорію' }}
                       </DialogTitle>
                       <button @click="closeModal"
-                        class="w-8 h-8 flex items-center justify-center rounded-full 
-                          transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
-                      >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
+                          class="w-8 h-8 flex items-center justify-center rounded-full 
+                            transition-colors cursor-pointer hover:bg-[rgba(0,0,0,0.2)]"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                       </button>
                   </header>
                   <div class="mb-2">
-                    <select @change="chooseType" :disabled="filling.id" v-model="typeSelected.id"
+                    <select @change="chooseType" :disabled="category.id" v-model="category.type_id"
                       class="rounded"
-                      :class="filling.id ? 'opacity-25 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'"
+                      :class="category.id ? 'opacity-25 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'"
                     >
                       <option value="null" disabled>Оберіть тип</option>
                       <option v-for="item of typeSelectOptions" :key="item.id" :value="item.id">{{ item.name }}</option>
                     </select>
                   </div>
-                  <form @submit.prevent="onSubmit" v-if="typeSelected.id || filling.id">
+                  <form @submit.prevent="onSubmit" v-if="category.type_id">
                     <div class="p-4 bg-white">
-                      <div class="mb-2">
+                      <!-- <div class="mb-2">
                         <CustomInput v-if="categorySelectOptions.length > 0" select-title="Оберіть категорію" type="select" 
-                          v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія"/>
+                          v-model="category.id" :select-prop="categorySelectOptions" label="Категорія"/>
                         <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
-                      </div>
-                      <div class="mb-2" >
-                        <CustomInput v-model="filling.title" label="Назва" />
-                        <span v-if="errMsg['title']" class="text-red-400">{{ errMsg['title'] }}</span>
-                      </div>
-                      
-                      <div class="mb-2 flex justify-between items-center gap-4">
-                        <div class="mt-1" v-if="filling.image || preView">
-                          <img :src="preView || filling.image" class="w-16 rounded" :alt="filling.title">
-                        </div>
-                        <!-- <CustomInput type="file" label="Product Image" @change="file => filling.image = file" class="border-none" /> -->
-                        <CustomInput type="file" label="Product Image" @change="changeImage($event)" class="border-none" />
-                        <span v-if="errMsg['image']" class="text-red-400">{{ errMsg['image'] }}</span>  
-                      </div>
+                      </div> 
                       <div class="mb-2">
-                        <CustomInput type="textarea" v-model="filling.description" label="Опис" />
+                        <CustomInput select-title="Оберіть категорію" type="select" 
+                          v-model="category.id" :select-prop="categorySelectOptions" label="Категорія"/>
+                        <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
+                      </div> -->
+                      <div class="mb-2" >
+                        <CustomInput v-model="category.name" label="Назва" />
+                        <span v-if="errMsg['name']" class="text-red-400">{{ errMsg['name'] }}</span>
+                      </div>
+                      <!-- <div class="mb-2">
+                        <CustomInput type="textarea" v-model="category.description" label="Опис" />
                         <span v-if="errMsg['description']" class="text-red-400">{{ errMsg['description'] }}</span> 
                       </div>
                       <div class="mb-2">
-                        <CustomInput type="number" v-model="filling.unit_price" label="Ціна" prepend="грн" />
+                        <CustomInput type="number" v-model="category.unit_price" label="Ціна" prepend="грн" />
                         <span v-if="errMsg['unit_price']" class="text-red-400">{{ errMsg['unit_price'] }}</span> 
                       </div>
                       <div class="mb-2" v-if="checkWeight">
-                        <CustomInput type="number" v-model="filling.min_weight" label="Мін. вага" prepend="кг"/>
+                        <CustomInput type="number" v-model="category.min_weight" label="Мін. вага" prepend="кг"/>
                         <span v-if="errMsg['min_weight']" class="text-red-400">{{ errMsg['min_weight'] }}</span> 
                       </div>
                       <div class="mb-2" v-else>
-                        <CustomInput type="number" v-model="filling.min_quantity" label="Мін. кількість" prepend="шт"/>
+                        <CustomInput type="number" v-model="category.min_quantity" label="Мін. кількість" prepend="шт"/>
                         <span v-if="errMsg['min_quantity']" class="text-red-400">{{ errMsg['min_quantity'] }}</span> 
-                      </div>
+                      </div> -->
                     </div>
                     <footer class="bg-gray-50 px-4 py-3 xm:px-6 sm:flex sm:flex-row-reverse">
                       <button type="submit"
                         class="py-2 px-4 border border-transparent text-sm font-medium rounded-md 
                         text-white bg-indigo-600 hover:bg-indigo-500"
                       >
-                        <span v-if="filling.id">Зберегти</span>
+                        <span v-if="category.id">Зберегти</span>
                         <span v-else>Створити</span>
                       </button>
                       <button type="button" @click="closeModal" ref="cancelButtonRef"
@@ -133,25 +124,20 @@ import axiosClient from '../../axios';
 const store = useStore()
 const props = defineProps({
   modelValue: Boolean,
-  filling: Object,
+  category: Object,
 })
-const preView = ref(null)
 const errMsg = ref({})
 const typeSelected = ref({id: null})
 const typeSelectOptions = ref([])
-const categorySelectOptions = ref([])
+
 const loading = ref(false)
-const emit = defineEmits(['update:modelValue', 'closeModal', 'get-fillings'])
-const filling = ref({...props.filling})
+const emit = defineEmits(['update:modelValue', 'closeModal', 'get-categories'])
+const category = ref({...props.category})
 const show = computed({
   get() {return props.modelValue},
   set(show) {emit('update:modelValue', show)}
 })
 
-const checkWeight = computed(() => {
-  const type = typeSelectOptions.value.find((t) => t.id === typeSelected.value.id)
-  return type?.weight_quantity === 'weight'
-})
 
 function closeModal() {
   show.value = false
@@ -159,18 +145,16 @@ function closeModal() {
   errMsg.value = {}
   typeSelected.value = {id: null}
   loading.value = false
-  preView.value = null
+
 }
 function onSubmit(){
   loading.value = true
-  if(filling.value.id){
-    store.dispatch('updateFilling', filling.value)
+  if(category.value.id){
+    store.dispatch('updateCategory', category.value)
       .then((res) => {
         loading.value = false
         if(res.status === 200){
-          // todo show notificztion
-          // store.dispatch('getFillings', {sort_direction: 'desc'})
-          emit('get-fillings')
+          emit('get-categories')
           closeModal()
         }
       })
@@ -181,13 +165,12 @@ function onSubmit(){
       })
   } else {
     if(validationCheck()){
-      store.dispatch('createFilling', filling.value)
+      console.log('asd123')
+      store.dispatch('createCategory', category.value)
         .then((res) => {
           loading.value = false
           if(res.status === 201){
-            // todo show notification
-            // store.dispatch('getFillings', {sort_direction: 'desc'})
-            emit('get-fillings')
+            emit('get-categories')
             closeModal()
           }
         })
@@ -212,7 +195,7 @@ function prepareErrorMsg(response){
 // Validation start
 
 function validationCheck(){
-  if(filling.value.id){
+  if(category.value.id){
     console.log('update')
   } else {
     requiredProp()
@@ -222,8 +205,8 @@ function validationCheck(){
   return isEmptyObject(errMsg.value)
 }
 function requiredProp(){
-  for (let key in filling.value){
-    if(!filling.value[key]){
+  for (let key in category.value){
+    if(!category.value[key]){
       // if(key === 'min_quantity' && )
       errMsg.value[key] = `${key} is required`
     } else {
@@ -240,64 +223,33 @@ function isEmptyObject(obj){
 
 
 onUpdated(() => {
-  filling.value = props.filling
+  category.value = props.category
   checkCategoryForUpdate()
 })
 
 onMounted(() => {
-  axiosClient.get('/type')
+    axiosClient.get('/type')
     .then((res) => {
       typeSelectOptions.value = res.data
     })
     
 })
 
-function chooseType(){
-  console.log('chooseType')
-  axiosClient.get('/get-categories/'+typeSelected.value.id)
-    .then(({data}) => {
-      categorySelectOptions.value = data.map((item) => ({key: item.id, val: item.name}))
-    })
-
-    if(checkWeight.value){
-      delete filling.value['min_quantity']
-      filling.value['min_weight'] = ''
-    } else {
-      delete filling.value['min_weight']
-      filling.value['min_quantity'] = ''
-    }
-
-    for (let item in filling.value){
-      filling.value[item] = ''
-    }
-}
 
 function checkCategoryForUpdate(){
-  if(filling.value.id){
-    axiosClient('/get-type-and-categories/'+filling.value.category_id)
+  console.log(category.value)
+  if(category.value.id){
+    axiosClient('/get-type-and-categories/'+category.value.id)
       .then(({data}) => {
-        console.log(data)
         // typeSelectOptions.value = data.categories
         typeSelected.value = data.type
-        categorySelectOptions.value = data.categories.map((item) => ({key: item.id, val: item.name}))
-        if(typeSelected.value.weight_quantity === 'weight'){
-          delete filling.value['min_quantity']
-        } else {
-          delete filling.value['min_weight']
-        }
+        // categorySelectOptions.value = data.categories.map((item) => ({key: item.id, val: item.name}))
+        // if(typeSelected.value.weight_quantity === 'weight'){
+        //   delete category.value['min_quantity']
+        // } else {
+        //   delete category.value['min_weight']
+        // }
     })
   }
-}
-
-
-
-function changeImage($event){
-  filling.value.image = $event
-  // preview image
-  let fileReader = new FileReader()
-  fileReader.onload = (e) => {
-    preView.value = e.target.result
-  }
-  fileReader.readAsDataURL($event)
 }
 </script>

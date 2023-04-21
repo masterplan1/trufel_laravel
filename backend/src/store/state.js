@@ -12,5 +12,10 @@ export const state = {
     loading: false,
     data: [],
     links: {}
-  }
+  },
+  categories: {
+    loading: false,
+    data: [],
+    links: {}
+  },
 }
