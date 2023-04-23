@@ -156,6 +156,10 @@ function deleteHandler(id){
     store.dispatch('removeFilling', id)
     .then(() => {
       getFillings({})
+    }).catch(({response}) => {
+      // todo notification 
+      getFillings({}) 
+      console.log(response.data.message)
     })
   }
 }

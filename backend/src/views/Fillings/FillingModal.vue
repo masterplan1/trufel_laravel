@@ -59,10 +59,10 @@
                       <option v-for="item of typeSelectOptions" :key="item.id" :value="item.id">{{ item.name }}</option>
                     </select>
                   </div>
-                  <form @submit.prevent="onSubmit" v-if="typeSelected.id || filling.id">
+                  <form @submit.prevent="onSubmit" v-if="categorySelectOptions.length > 0 && (typeSelected.id || filling.id)">
                     <div class="p-4 bg-white">
                       <div class="mb-2">
-                        <CustomInput v-if="categorySelectOptions.length > 0" select-title="Оберіть категорію" type="select" 
+                        <CustomInput select-title="Оберіть категорію" type="select" 
                           v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія"/>
                         <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
                       </div>

@@ -15,6 +15,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 class FillingController extends Controller
 {
@@ -99,10 +100,12 @@ class FillingController extends Controller
      */
     public function destroy(Filling $filling)
     {
-        // $this->removeImage($filling->image);
-        Image::removeImage($filling->image);
+        $path = $filling->image;
         $filling->delete();
-        return response()->noContent();
+        if(Image::removeImage($path)){
+            return response()->noContent();
+        }
+        return throw new FileNotFoundException($path);
     }
 
     // private function saveImage(UploadedFile $image)

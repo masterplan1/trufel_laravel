@@ -145,6 +145,9 @@ function deleteHandler(id){
     .then(() => {
       getCategories({})
     })
+    .catch(({response}) => {
+      alert(response.data.message)
+    })
   }
 }
 function getCategories(payload){

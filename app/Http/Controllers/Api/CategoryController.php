@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -64,7 +65,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
-        return response()->noContent();
+        if(count($category->fillings) === 0){
+            $category->delete();
+            return response()->noContent();
+        } else {
+            throw new Exception('Категорія містить начинки!');
+        }
+        
     }
 }

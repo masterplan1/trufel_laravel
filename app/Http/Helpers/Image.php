@@ -28,6 +28,9 @@ class Image
     {
         $a = explode('/', $image);
         if (is_array($a) && count($a) > 4) {
+            if(!isset($a[6])){
+                return false;
+            }
             $path = 'public/' . implode('/', [$a[4], $a[5], $a[6]]);
             if (Storage::exists($path)) {
                 Storage::deleteDirectory($path);

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('fillings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('category_id');
+            // $table->foreignId('category_id');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->string('image');
             $table->text('description');
             $table->integer('unit_price');
