@@ -28,7 +28,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::apiResource('/category', CategoryController::class);
 
 
-    Route::get('/type', [TypeController::class, 'index']);
+    Route::get('/type/all', [TypeController::class, 'all']);
+    Route::apiResource('/type', TypeController::class);
     Route::get('/get-categories/{type}', [TypeController::class, 'getCategories']);
     Route::get('/get-type-and-categories/{category}', [TypeController::class, 'getTypeByCategoryId']);
 });

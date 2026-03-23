@@ -36,7 +36,7 @@
           :required="required"
           :checked="props.modelValue"
           @change="emit('update:modelValue', $event.target.checked)"
-          class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          class="h-4 w-4 rounded border-gray-300 text-brand-rose focus:ring-brand-rose"
         />
         <label :for="label" class="ml-2 block text-sm text-gray-900">{{
           label
@@ -113,7 +113,7 @@ const props = defineProps({
 });
 const inputClasses = computed(() => {
   const cls = [
-    "block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-xm",
+    "block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-500 focus:outline-none focus:ring-brand-rose focus:border-brand-rose focus:z-10 sm:text-xm",
   ];
 
   if (!props.prepend && props.append) {

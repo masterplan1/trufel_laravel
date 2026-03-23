@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class Filling extends Model
 {
@@ -11,6 +13,11 @@ class Filling extends Model
     
     protected $fillable = ['title', 'description', 'image', 'min_weight', 'min_quantity', 'category_id', 'unit_price'];
     
+    public function getImageAttribute($value): ?string
+    {
+        return $value ? URL::to(Storage::url($value)) : null;
+    }
+
     public function category(){
         return $this->belongsTo(Category::class);
     }

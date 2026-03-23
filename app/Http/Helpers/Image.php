@@ -13,8 +13,8 @@ class Image
 {
     public static function saveImage(UploadedFile $image): string
     {
-        $path = '/images/' . Str::random() . '-' . time();
-        $public_path = '/public' . $path;
+        $path = 'images/' . Str::random() . '-' . time();
+        $public_path = 'public/' . $path;
         if (!Storage::exists($public_path)) {
             Storage::makeDirectory($public_path, 0755, true);
         }
@@ -24,19 +24,14 @@ class Image
         return $path . '/' . $image->getClientOriginalName();
     }
 
-    public static function removeImage(string $image)
+    public static function removeImage(string $image): bool
     {
-        $a = explode('/', $image);
-        if (is_array($a) && count($a) > 4) {
-            if(!isset($a[6])){
-                return false;
-            }
-            $path = 'public/' . implode('/', [$a[4], $a[5], $a[6]]);
-            if (Storage::exists($path)) {
-                Storage::deleteDirectory($path);
-                return true;
-            }
+        $dir = 'public/' . dirname($image);
+        if (Storage::exists($dir)) {
+            Storage::deleteDirectory($dir);
+            return true;
         }
+        return false;
     }
 
     public static function optimize()

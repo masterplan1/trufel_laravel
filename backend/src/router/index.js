@@ -3,6 +3,7 @@ import Dashboard from '../views/Dashboard.vue'
 import Order from '../views/Order.vue'
 import Comment from '../views/Comment.vue'
 import Category from '../views/Category/index.vue'
+import Types from '../views/Types/index.vue'
 import Filling from '../views/Fillings/Filling.vue'
 import Gallary from '../views/Gallary/Gallary.vue'
 import Statistic from '../views/Statistic.vue'
@@ -47,6 +48,11 @@ const router = createRouter({
           path: 'category',
           name: 'app.category',
           component: Category,
+        },
+        {
+          path: 'types',
+          name: 'app.types',
+          component: Types,
         },
         {
           path: 'gallary',

@@ -106,7 +106,37 @@ export function removeProduct({commit}, id){
 }
 
 export function getTypes(){
-  return axiosClient.get('/type')
+  return axiosClient.get('/type/all')
+}
+
+export function getAllTypes({commit}, {page = null, perPage = null, search = null, sort_direction = null, sort_field = null}){
+  commit('setTypesLoading', true)
+  return axiosClient.get('/type', {
+    params: { per_page: perPage, page, search, sort_direction, sort_field }
+  })
+    .then(({data}) => {
+      commit('setTypes', data)
+      commit('setTypesLoading', false)
+      return data;
+    })
+}
+
+export function createType({commit}, type){
+  return axiosClient.post('/type', type)
+}
+
+export function updateType({commit}, type){
+  const id = type.id;
+  type._method = 'PUT'
+  return axiosClient.post(`/type/${id}`, type)
+}
+
+export function getType({}, id){
+  return axiosClient.get(`/type/${id}`)
+}
+
+export function removeType({commit}, id){
+  return axiosClient.delete(`/type/${id}`)
 }
 
 export function getCategories({commit}, {page = null, perPage = null, search = null, type = null, sort_direction = null, sort_field = null}){

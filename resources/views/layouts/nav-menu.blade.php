@@ -1,82 +1,64 @@
 <?php
   $types = App\Models\Type::getAll();
-  // print_r($types);
 ?>
 <div x-data="{
   cartItemsCount: {{ App\Http\Helpers\Cart::getCartItemsCount() }},
-  openMobileGalleryMenu: false, 
-  openMobileOrderMenu: false,
+  openMobileCatalogMenu: false,
   showMobileMenu: false,
-  toggleMobileGallaryMenu(){
-    this.openMobileGalleryMenu = !this.openGalleryMenu
-    this.openMobileOrderMenu = false
-  },
-  toggleMobileOrderMenu(){
-    this.openMobileOrderMenu = !this.openOrderMenu
-    this.openMobileGalleryMenu = false
-  },
-  closeAllMobileMenus(){
-    this.openMobileGalleryMenu = false 
-    this.openMobileOrderMenu = false
-  },
   cartChange($event){
-    console.log('asdasdads', $event.detail.count)
     this.cartItemsCount = $event.detail.count
   },
-}" 
-  class="bg-amber-50 z-20 absolute w-full"
+}"
+  class="bg-brand-cream z-20 absolute w-full"
   @cart-change.window="cartChange($event)"
-  {{-- @cart-change.window="cartItemsCount = $event.detail.count" --}}
- 
 >
 
   <!-- Mobile Nav -->
-  <nav x-cloak :class="showMobileMenu ? 'left-0' : '-left-[220px]'" x-transition class="block md:hidden fixed top-0 bottom-0 bg-amber-50 w-[220px] h-full pt-20
-    shadow-xl transition-all">
-    <ul class="">
-      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="/">Головна</a></li>
+  <nav x-cloak :class="showMobileMenu ? 'left-0' : '-left-[220px]'"
+    x-transition class="block md:hidden fixed top-0 bottom-0 bg-brand-cream w-[220px] h-full pt-20 shadow-xl transition-all z-30">
+    <ul @click.outside="showMobileMenu = false">
+      <li><a class="p-navbar-item block hover:bg-brand-blush transition-colors" href="/">Головна</a></li>
       <li class="relative">
-        <a @click="toggleMobileGallaryMenu" class="cursor-pointer p-navbar-item block hover:bg-amber-100 transition-colors">
+        <a @click="openMobileCatalogMenu = !openMobileCatalogMenu"
+          class="cursor-pointer p-navbar-item block hover:bg-brand-blush transition-colors">
           <span class="flex items-center justify-between">
-            Галерея
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -ml-8">
+            Каталог
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+              class="w-5 h-5 -ml-8 transition-transform duration-200"
+              :class="openMobileCatalogMenu ? 'rotate-180' : ''">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
           </span>
         </a>
-        <ul x-show="openMobileGalleryMenu" x-transition class="bg-amber-50 text-left h-[180px] transition-all text-xl overflow-hidden">
+        <ul x-show="openMobileCatalogMenu" x-transition class="bg-brand-cream text-left text-xl">
           @foreach ($types as $type)
-            <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-1 px-6 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
+            <li class="cursor-pointer hover:bg-brand-blush transition-colors">
+              <a class="py-1 px-6 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a>
+            </li>
           @endforeach
         </ul>
       </li>
-      <li class="relative">
-        <a @click="toggleMobileOrderMenu" class="cursor-pointer p-navbar-item block hover:bg-amber-100 transition-colors" href="javascript:void(0)">
-          <span class="flex items-center justify-between">
-            Замовити
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -ml-8">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          </span>
-        </a>
-        <ul x-show="openMobileOrderMenu" x-transition class="bg-amber-50 text-left h-[180px] transition-all text-xl overflow-hidden">
-          @foreach ($types as $type)
-            <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-1 px-6 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
-          @endforeach
-        </ul>
-      </li>
-      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="{{ route('contacts') }}">Контакти</a></li>
-      <li><a class="p-navbar-item block hover:bg-amber-100 transition-colors" href="{{ route('testimonials') }}">Відгуки</a></li>
+      <li><a class="p-navbar-item block hover:bg-brand-blush transition-colors" href="{{ route('testimonials') }}">Відгуки</a></li>
+      <li><a class="p-navbar-item block hover:bg-brand-blush transition-colors" href="{{ route('contacts') }}">Контакти</a></li>
     </ul>
   </nav>
-  <div class="flex justify-between max-w-5xl m-auto">
-    <button @click="showMobileMenu = !showMobileMenu" class="block md:hidden p-navbar-item z-20">
+
+  <!-- Overlay for mobile menu -->
+  <div x-cloak x-show="showMobileMenu" @click="showMobileMenu = false"
+    class="block md:hidden fixed inset-0 bg-black/20 z-20"></div>
+
+  <div class="flex justify-between items-center max-w-5xl m-auto">
+
+    <!-- Burger button -->
+    <button @click="showMobileMenu = !showMobileMenu" class="block md:hidden p-navbar-item z-40">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
     </button>
+
+    <!-- Logo -->
     <div class="p-navbar-item">
-      <a href="/" class="flex font-marck text-3xl">
+      <a href="/" class="flex font-marck text-3xl text-brand-text hover:text-brand-rose transition-colors duration-200">
         <span>tru</span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
           stroke="currentColor" class="w-8 h-8">
@@ -86,68 +68,56 @@
         <span>fel</span>
       </a>
     </div>
+
     <!-- Desktop nav -->
-    <nav x-data="{
-      openGalleryMenu: false, 
-      openOrderMenu: false,
-      toggleGallaryMenu(){
-        this.openGalleryMenu = !this.openGalleryMenu
-        this.openOrderMenu = false
-      },
-      toggleOrderMenu(){
-        this.openOrderMenu = !this.openOrderMenu
-        this.openGalleryMenu = false
-      },
-      closeAllMenus(){
-        this.openGalleryMenu = false 
-        this.openOrderMenu = false
-      }
-    }" class="flex-1 hidden md:block">
-      <ul @click.outside="closeAllMenus" class="grid grid-flow-col text-center">
-        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="/">Головна</a></li>
+    <nav x-data="{ openCatalogMenu: false }" class="flex-1 hidden md:block">
+      <ul @click.outside="openCatalogMenu = false" class="grid grid-flow-col text-center">
+        <li>
+          <a class="p-navbar-item block hover:text-brand-rose transition-colors duration-200" href="/">Головна</a>
+        </li>
         <li class="relative cursor-pointer">
-          <a @click="toggleGallaryMenu" class="p-navbar-item block hover:text-gray-400 transition-colors">
-            <span class="flex items-center justify-between">
-              Галерея
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -ml-8">
+          <a @click="openCatalogMenu = !openCatalogMenu"
+            class="p-navbar-item block hover:text-brand-rose transition-colors duration-200">
+            <span class="flex items-center justify-center gap-1">
+              Каталог
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4 transition-transform duration-200"
+                :class="openCatalogMenu ? 'rotate-180' : ''">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
             </span>
           </a>
-          <ul x-cloak x-show="openGalleryMenu" x-transition class="absolute left-1 bg-amber-50 text-left text-xl">
+          <ul x-cloak x-show="openCatalogMenu" x-transition
+            class="absolute left-0 bg-brand-cream text-left shadow-lg rounded-xl border border-brand-blush overflow-hidden min-w-[160px] z-50">
             @foreach ($types as $type)
-              <li class="cursor-pointer hover:bg-amber-100  transition-colors"><a class="py-2 px-4 block" href="{{ route('product', $type) }}">{{ $type->name }}</a></li>
+              <li class="cursor-pointer hover:bg-brand-blush transition-colors">
+                <a class="py-2.5 px-5 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a>
+              </li>
             @endforeach
           </ul>
         </li>
-        <li class="relative cursor-pointer">
-          <a @click="toggleOrderMenu" class="p-navbar-item block hover:text-gray-400 transition-colors">
-            <span class="flex items-center justify-between">
-              Замовити
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 -ml-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-              </svg>
-            </span>
-          </a>
-          <ul x-cloak x-show="openOrderMenu" x-transition class="absolute left-1 bg-amber-50 text-left text-xl">
-            @foreach ($types as $type)
-             <li class="cursor-pointer hover:bg-amber-100 transition-colors"><a class="py-2 px-4 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a></li>
-            @endforeach
-          </ul>
+        <li>
+          <a class="p-navbar-item block hover:text-brand-rose transition-colors duration-200" href="{{ route('testimonials') }}">Відгуки</a>
         </li>
-        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="{{ route('contacts') }}">Контакти</a></li>
-        <li><a class="p-navbar-item block hover:text-gray-400 transition-colors" href="{{ route('testimonials') }}">Відгуки</a></li>
+        <li>
+          <a class="p-navbar-item block hover:text-brand-rose transition-colors duration-200" href="{{ route('contacts') }}">Контакти</a>
+        </li>
       </ul>
     </nav>
+
+    <!-- Cart -->
     <div class="p-navbar-item">
-      <a href="{{ route('cart.index') }}" class="flex relative">
+      <a href="{{ route('cart.index') }}" class="flex relative text-brand-text hover:text-brand-rose transition-colors duration-200">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-          stroke="currentColor" class="w-8 h-8tr">
+          stroke="currentColor" class="w-8 h-8">
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
         </svg>
-        <small x-cloak class="absolute -bottom-1 -left-1 z-10 p-3 w-3 h-3 leading-none text-white text-sm flex items-center justify-center bg-red-400 rounded-full" x-show="cartItemsCount > 0" x-text="cartItemsCount"></small>
+        <small x-cloak
+          class="absolute -bottom-1 -left-1 z-10 p-3 w-3 h-3 leading-none text-white text-xs flex items-center justify-center bg-brand-rose rounded-full"
+          x-show="cartItemsCount > 0" x-text="cartItemsCount"></small>
       </a>
     </div>
+
   </div>
 </div>

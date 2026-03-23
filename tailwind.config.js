@@ -7,6 +7,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: {
+          cream: '#FAFAF8',
+          blush: '#F0DDD9',
+          rose: '#C9847A',
+          'rose-dark': '#A8635C',
+          text: '#2D2D2D',
+          muted: '#8A8078',
+        }
+      },
       fontFamily: {
         alice: ["Alice"],
         marck: ["MarckScript"],
@@ -17,20 +27,12 @@ module.exports = {
       },
       keyframes: {
         'zoom-in': {
-          "from": {
-            transform: "scale(0.4)",
-          },
-          "to": {
-            transform: "scale(1)",
-          }
+          "from": { transform: "scale(0.4)" },
+          "to": { transform: "scale(1)" }
         },
         'zoom-out': {
-          "from": {
-            transform: "scale(1)",
-          },
-          "to": {
-            transform: "scale(0.4)",
-          }
+          "from": { transform: "scale(1)" },
+          "to": { transform: "scale(0.4)" }
         },
       },
       animation: {

@@ -6,6 +6,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        brand: {
+          cream: '#FAFAF8',
+          blush: '#F0DDD9',
+          rose: '#C9847A',
+          'rose-dark': '#A8635C',
+          text: '#2D2D2D',
+          muted: '#8A8078',
+        }
+      },
       keyframes: {
         'fade-in-down': {
           "from": {

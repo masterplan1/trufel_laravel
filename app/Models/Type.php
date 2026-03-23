@@ -9,7 +9,9 @@ class Type extends Model
 {
     use HasFactory;
 
-    public $timestemps = false;
+    public $timestamps = false;
+
+    protected $fillable = ['name', 'weight_quantity', 'is_candybar'];
 
     public function categories($limit = null){
         return $this->hasMany(Category::class)->limit($limit);

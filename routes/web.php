@@ -32,6 +32,7 @@ Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->
 Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
 
 Route::get('/contacts', [SiteController::class, 'contacts'])->name('contacts');
+Route::get('/privacy', fn() => view('privacy'))->name('privacy');
 
 Route::get('/testimonials', [CommentController::class, 'testimonials'])->name('testimonials');
 Route::post('/testimonial/create', [CommentController::class, 'addTestimonial'])->name('create-testimonial');

@@ -4,7 +4,7 @@
       <h1 class="text-3xl font-semibold">Начинки</h1>
       <button
         @click="openModal"
-        class="flex justify-center items-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-300"
+        class="flex justify-center items-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-brand-rose hover:bg-brand-rose-dark"
       >Додати Начинку
       </button>
     </div>
@@ -13,7 +13,7 @@
         <div class="flex items-center">
           <span class="whitespace-nowrap">на сторінці, шт</span>
           <select @change="getFillings(null)" v-model="perPage"
-            class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-brand-rose focus:border-brand-rose focus:z-10 sm:text-sm"
           >
             <option value="5">5</option>
             <option value="10">10</option>
@@ -25,14 +25,14 @@
         <div class="flex items-center">
           <span class="whitespace-nowrap">тип</span>
           <select @change="getFillings(null)" v-model="type"
-            class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-brand-rose focus:border-brand-rose focus:z-10 sm:text-sm"
           >
             <option value="0">Всі</option>
             <option :value="type.id" v-for="type of typesForSelect" :key="type.id">{{ type.name }}</option>
           </select>
         </div>
         <div>
-          <input type="text" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          <input type="text" class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder:-gray-500 text-gray-900 rounded-md ml-3 focus:ring-brand-rose focus:border-brand-rose focus:z-10 sm:text-sm"
             placeholder="Пошук"
             @change="getFillings(null)"
             v-model="search"
@@ -96,7 +96,7 @@
               v-html="link.label"
               :class="[
                 link.active
-                  ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                  ? 'z-10 bg-brand-blush border-brand-rose text-brand-rose-dark'
                   : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
                 i === 0 ? 'rounded-l-md' : '',
                 i === fillings.links.links.length - 1 ? 'rounded-r-md' : '',

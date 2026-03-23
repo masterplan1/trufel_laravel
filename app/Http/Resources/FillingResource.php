@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class FillingResource extends JsonResource
 {

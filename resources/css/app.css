@@ -2,21 +2,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
-/* @import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'; */
-
 
 @layer base {
   .p-navbar-item {
     @apply py-3 px-2 lg:px-4;
   }
   .button {
-    @apply mx-auto my-3 px-12 py-1 shadow bg-red-200 text-white hover:border-red-200 cursor-pointer 
-    transition-colors text-lg border-gray-500 rounded-full
+    @apply block mx-auto my-3 px-12 py-2 bg-brand-rose text-white cursor-pointer
+    transition-colors duration-200 text-lg rounded-full hover:bg-brand-rose-dark shadow-sm;
+  }
+  .btn-outline {
+    @apply px-8 py-2.5 border border-brand-rose text-brand-rose rounded-full
+    hover:bg-brand-rose hover:text-white transition-colors duration-200 cursor-pointer;
+  }
+  .section-title {
+    @apply font-caveat text-4xl text-brand-text mb-2;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden;
   }
 }
 

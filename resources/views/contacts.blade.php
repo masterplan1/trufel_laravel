@@ -16,9 +16,9 @@
                 </div>
                 <div class="flex items-center justify-center gap-3 mb-6 sm:flex-row flex-col">
                     <div class="flex gap-3">
-                        <img class="w-10 h-10 bg-red-300 rounded-full p-1" src="/img/svg/viber-icon.svg" alt="">
-                        <img class="w-10 h-10 bg-red-300 rounded-full p-1" src="/img/svg/telegram-icon.svg" alt="">
-                        <div class="w-10 h-10 bg-red-300 rounded-full p-1 text-white flex items-center justify-center">
+                        <img class="w-10 h-10 bg-brand-rose rounded-full p-1" src="/img/svg/viber-icon.svg" alt="">
+                        <img class="w-10 h-10 bg-brand-rose rounded-full p-1" src="/img/svg/telegram-icon.svg" alt="">
+                        <div class="w-10 h-10 bg-brand-rose rounded-full p-1 text-white flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"

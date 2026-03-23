@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="font-kurale text-center ">
+    <section class="font-kurale text-center">
         <x-title>
             <x-slot:title>
                 {{ $type->name }}
@@ -15,70 +15,89 @@
                     ],
                 ],
             ),
-        ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-10 sm:mt-20">
+        ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-8 sm:mt-16 px-4">
             @include('product.modal-zoom')
+
             @if (count($categories) > 1 && !$type->is_candybar)
-                <div class="flex justify-around gap-4 flex-wrap mb-8 text-center items-center">
-                    <div @click="selectCategory(0)"
-                        class="min-w-[142px] sm:min-w-[210px] px-2 sm:px-6 sm:py-2 shadow hover:bg-red-200 hover:text-white hover:border-red-200 cursor-pointer 
-      transition-colors sm:text-xl border-gray-500 border rounded-full"
-                        :class="{ 'bg-red-200 text-white border-red-200': activeClassCategory === null }">
+                <div class="flex justify-center gap-3 flex-wrap mb-8">
+                    <button @click="selectCategory(0)"
+                        class="px-5 py-2 rounded-full border transition-colors duration-200 text-sm sm:text-base
+                        hover:bg-brand-rose hover:text-white hover:border-brand-rose"
+                        :class="activeClassCategory === null
+                            ? 'bg-brand-rose text-white border-brand-rose'
+                            : 'border-brand-muted text-brand-muted'">
                         Весь асортимент
-                    </div>
+                    </button>
 
                     @foreach ($categories as $key => $category)
-                        <div @click="selectCategory({{ $category->id }}, {{ $key }})"
-                            class="min-w-[142px] sm:min-w-[210px] px-2 sm:px-6 sm:py-2 shadow hover:bg-red-200 hover:text-white hover:border-red-200 cursor-pointer 
-      transition-colors sm:text-xl border-gray-500 border rounded-full"
-                            :class="{ 'bg-red-200 text-white border-red-200': activeClassCategory === {{ $key }} }">
+                        <button @click="selectCategory({{ $category->id }}, {{ $key }})"
+                            class="px-5 py-2 rounded-full border transition-colors duration-200 text-sm sm:text-base
+                            hover:bg-brand-rose hover:text-white hover:border-brand-rose"
+                            :class="activeClassCategory === {{ $key }}
+                                ? 'bg-brand-rose text-white border-brand-rose'
+                                : 'border-brand-muted text-brand-muted'">
                             {{ $category->name }}
-                        </div>
+                        </button>
                     @endforeach
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-10 min-h-[460px] sm:min-h-[400px]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10 min-h-[460px] sm:min-h-[400px]">
                 @foreach ($products as $product)
-                    <div x-show="!categoryWasSelected" class="px-4 mb-6 relative h-[80vw] sm:h-[36vw] lg:h-[300px]">
+                    <div x-show="!categoryWasSelected" class="relative overflow-hidden rounded-2xl aspect-square group">
                         <div
-                            class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                @click="zoomImage($el)" stroke-width="1.5" stroke="currentColor" class="w-12 h-12">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
+                            class="opacity-0 group-hover:opacity-100 transition-all duration-300 absolute
+                            inset-0 z-10 flex items-center justify-center bg-brand-text/40 rounded-2xl">
+                            <button @click="zoomImage($el)"
+                                class="w-14 h-14 flex items-center justify-center bg-white/20 backdrop-blur-sm
+                                rounded-full text-white hover:bg-white/40 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
+                            </button>
                         </div>
-                        <img class="w-full h-full rounded-md object-cover" src="{{ $product->image }}" alt="">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            src="{{ $product->image }}" alt="" loading="lazy">
                     </div>
                 @endforeach
+
                 <template x-if="additionProducts.length">
                     <template x-for="newProduct in additionProducts" :key="newProduct.id">
                         <div x-data="{ shown: false }" x-intersect.full="shown = true">
-                            <div x-show="shown" x-transition class="px-4 mb-6 relative">
+                            <div x-show="shown" x-transition
+                                class="relative overflow-hidden rounded-2xl aspect-square group">
                                 <div
-                                    class="absolute bottom-4 bg-gray-200/20 right-8 text-white cursor-pointer p-2 rounded-full backdrop-blur-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        @click="zoomImage($el)" stroke-width="1.5" stroke="currentColor"
-                                        class="w-12 h-12">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                                    </svg>
+                                    class="opacity-0 group-hover:opacity-100 transition-all duration-300 absolute
+                                    inset-0 z-10 flex items-center justify-center bg-brand-text/40 rounded-2xl">
+                                    <button @click="zoomImage($el)"
+                                        class="w-14 h-14 flex items-center justify-center bg-white/20 backdrop-blur-sm
+                                        rounded-full text-white hover:bg-white/40 transition-colors duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-7 h-7">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                        </svg>
+                                    </button>
                                 </div>
-                                <img class="w-full h-[80vw] sm:h-[36vw] lg:h-[300px] rounded-md object-cover"
-                                    :src="newProduct.image" alt="">
+                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    :src="newProduct.image" alt="" loading="lazy">
                             </div>
                         </div>
                     </template>
                 </template>
             </div>
+
             <div x-show="countHandler" class="flex items-center justify-center mb-14">
-                <span class="block border w-full"></span>
-                <div @click="addProducts"
-                    class="min-w-[210px] px-6 py-2 shadow hover:bg-red-200 hover:text-white hover:border-red-200 cursor-pointer 
-      transition-colors text-xl border-gray-500 border rounded-full">
+                <span class="block border border-brand-blush w-full"></span>
+                <button @click="addProducts"
+                    class="min-w-[200px] px-6 py-2 border border-brand-muted text-brand-muted rounded-full
+                    hover:bg-brand-rose hover:text-white hover:border-brand-rose
+                    transition-colors duration-200 text-base mx-4 whitespace-nowrap">
                     Більше
-                </div>
-                <span class="block border w-full"></span>
+                </button>
+                <span class="block border border-brand-blush w-full"></span>
             </div>
         </div>
     </section>

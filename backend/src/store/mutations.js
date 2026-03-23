@@ -34,3 +34,11 @@ export function setCategories(state, data){
 export function setCategoriesLoading(state, loading){
   state.categories.loading = loading
 }
+
+export function setTypes(state, data){
+  state.types.data = data.data
+  state.types.links = data.meta
+}
+export function setTypesLoading(state, loading){
+  state.types.loading = loading
+}

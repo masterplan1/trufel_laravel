@@ -16,4 +16,9 @@
       </div>
     </div>
   </div>
+  <div class="max-w-6xl mx-auto px-10 pb-4 text-center">
+    <a href="{{ route('privacy') }}" class="text-white/60 hover:text-white text-sm transition-colors">
+      Політика конфіденційності
+    </a>
+  </div>
 </footer>

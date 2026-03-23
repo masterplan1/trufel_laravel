@@ -45,8 +45,7 @@ class ProductController extends Controller
         /** @var \Illuminate\Http\UploadedFile $image */
         $image = $data['image'] ?? null;
         if($image){
-            $relativePath = Image::saveImage($image);
-            $data['image'] = URL::to(Storage::url($relativePath));
+            $data['image'] = Image::saveImage($image);
         }
         $product = Product::create($data);
         return new ProductListResource($product);

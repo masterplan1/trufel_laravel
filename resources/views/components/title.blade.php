@@ -1,7 +1,7 @@
 <div>
     <div class="pt-28  relative">
         <h1 class="font-amatic  text-7xl mb-4">{{ $title }}</h1>
-        <p class="hidden sm:block font-caveat text-3xl max-w-[60%] m-auto text-red-300">{{ $slot }}</p>
+        <p class="hidden sm:block font-caveat text-3xl max-w-[60%] m-auto text-brand-muted">{{ $slot }}</p>
         <div class="hidden lg:block">
             <span
                 style="transform: scale(.{{ random_int(3, 9) }});"

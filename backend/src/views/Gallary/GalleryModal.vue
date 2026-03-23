@@ -76,8 +76,8 @@
                     </div>
                     <footer class="bg-gray-50 px-4 py-3 xm:px-6 sm:flex sm:flex-row-reverse">
                       <button type="submit"
-                        class="py-2 px-4 border border-transparent text-sm font-medium rounded-md 
-                        text-white bg-indigo-600 hover:bg-indigo-500"
+                        class="py-2 px-4 border border-transparent text-sm font-medium rounded-md
+                        text-white bg-brand-rose hover:bg-brand-rose-dark"
                       >
                         Створити
                       </button>
@@ -187,7 +187,7 @@ function isEmptyObject(obj){
 // })
 
 onMounted(() => {
-  axiosClient.get('/type')
+  axiosClient.get('/type/all')
     .then((res) => {
       typeSelectOptions.value = res.data
     })

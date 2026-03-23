@@ -18,4 +18,9 @@ export const state = {
     data: [],
     links: {}
   },
+  types: {
+    loading: false,
+    data: [],
+    links: {}
+  },
 }

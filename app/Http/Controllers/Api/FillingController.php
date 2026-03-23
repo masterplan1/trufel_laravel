@@ -56,8 +56,7 @@ class FillingController extends Controller
         /** @var \Illuminate\Http\UploadedFile $image */
         $image = $data['image'] ?? null;
         if($image){
-            $relativePath = Image::saveImage($image);
-            $data['image'] = URL::to(Storage::url($relativePath));
+            $data['image'] = Image::saveImage($image);
         }
         $filling = Filling::create($data);
         return new FillingResource($filling);
@@ -81,15 +80,11 @@ class FillingController extends Controller
         /** @var \Illuminate\Http\UploadedFile $image */
         $image = $data['image'] ?? null;
         if($image){
-            $oldImage = $filling->image;
-
-            $relativePath = Image::saveImage($image);
-            $data['image'] = URL::to(Storage::url($relativePath));
-
+            $oldImage = $filling->getRawOriginal('image');
+            $data['image'] = Image::saveImage($image);
             if($oldImage){
                 Image::removeImage($oldImage);
             }
-
         }
         $filling->update($data);
         return new FillingResource($filling);
@@ -100,12 +95,10 @@ class FillingController extends Controller
      */
     public function destroy(Filling $filling)
     {
-        $path = $filling->image;
+        $image = $filling->getRawOriginal('image');
         $filling->delete();
-        if(Image::removeImage($path)){
-            return response()->noContent();
-        }
-        return throw new FileNotFoundException($path);
+        Image::removeImage($image);
+        return response()->noContent();
     }
 
     // private function saveImage(UploadedFile $image)
