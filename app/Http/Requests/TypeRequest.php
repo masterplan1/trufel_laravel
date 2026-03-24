@@ -14,9 +14,11 @@ class TypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'weight_quantity' => 'required|in:weight,quantity',
-            'is_candybar' => 'boolean',
+            'name'              => 'required|string|max:255',
+            'weight_quantity'   => 'required|in:weight,quantity',
+            'is_candybar'       => 'boolean',
+            'is_candybar_group' => 'boolean',
+            'image'             => 'nullable|image|max:5120',
         ];
     }
 }

@@ -23,4 +23,14 @@ export const state = {
     data: [],
     links: {}
   },
+  orders: {
+    loading: false,
+    data: [],
+    links: {}
+  },
+  comments: {
+    loading: false,
+    data: [],
+    links: {}
+  },
 }

@@ -12,10 +12,12 @@ class TypeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'weight_quantity' => $this->weight_quantity,
-            'is_candybar' => (bool) $this->is_candybar,
+            'id'                => $this->id,
+            'name'              => $this->name,
+            'weight_quantity'   => $this->weight_quantity,
+            'is_candybar'       => (bool) $this->is_candybar,
+            'is_candybar_group' => (bool) $this->is_candybar_group,
+            'image'             => $this->image,
         ];
     }
 }

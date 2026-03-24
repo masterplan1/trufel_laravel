@@ -11,7 +11,22 @@ class Type extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'weight_quantity', 'is_candybar'];
+    protected $fillable = ['name', 'weight_quantity', 'is_candybar', 'is_candybar_group', 'image'];
+
+    public function getImageAttribute($value): ?string
+    {
+        return $value ? \Illuminate\Support\Facades\URL::to(\Illuminate\Support\Facades\Storage::url($value)) : null;
+    }
+
+    public function previewImage(): ?string
+    {
+        if ($this->getRawOriginal('image')) {
+            return $this->image;
+        }
+        // fallback: перше зображення першої категорії
+        $filling = $this->categories()->with('fillings')->first()?->fillings()->first();
+        return $filling?->image;
+    }
 
     public function categories($limit = null){
         return $this->hasMany(Category::class)->limit($limit);
@@ -26,7 +41,9 @@ class Type extends Model
     //     return $this->hasManyThrough(Filling::class, Category::class)->offset($offset)->limit($limit);
     // }
     public static function getAll(){
-        return self::get();
+        // Меню: звичайні типи (is_candybar=0) + агрегатор кендібару (is_candybar_group=1)
+        // Підтипи кендібару (is_candybar=1, is_candybar_group=0) в меню не показуються
+        return self::where('is_candybar', false)->get();
     }
     public function getAdditionalFillings($categoryId = 0, $offset = null, $limit = 6){
         $query = Filling::query()->select(['f.*', 't.id as type_id', 

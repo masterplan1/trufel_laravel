@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Image;
 use App\Http\Requests\TypeRequest;
 use App\Http\Resources\TypeResource;
 use App\Models\Category;
@@ -30,7 +31,11 @@ class TypeController extends Controller
 
     public function store(TypeRequest $request)
     {
-        $type = Type::create($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $data['image'] = Image::saveImage($request->file('image'));
+        }
+        $type = Type::create($data);
         return new TypeResource($type);
     }
 
@@ -41,14 +46,26 @@ class TypeController extends Controller
 
     public function update(TypeRequest $request, Type $type)
     {
-        $type->update($request->validated());
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $oldImage = $type->getRawOriginal('image');
+            $data['image'] = Image::saveImage($request->file('image'));
+            if ($oldImage) {
+                Image::removeImage($oldImage);
+            }
+        }
+        $type->update($data);
         return new TypeResource($type);
     }
 
     public function destroy(Type $type)
     {
         if (Category::where('type_id', $type->id)->count() === 0) {
+            $oldImage = $type->getRawOriginal('image');
             $type->delete();
+            if ($oldImage) {
+                Image::removeImage($oldImage);
+            }
             return response()->noContent();
         } else {
             throw new Exception('Тип містить категорії!');

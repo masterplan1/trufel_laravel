@@ -122,11 +122,22 @@ export function getAllTypes({commit}, {page = null, perPage = null, search = nul
 }
 
 export function createType({commit}, type){
+  if (type.image instanceof File) {
+    const form = new FormData()
+    for (let key in type) form.append(key, type[key] ?? '')
+    return axiosClient.post('/type', form)
+  }
   return axiosClient.post('/type', type)
 }
 
 export function updateType({commit}, type){
-  const id = type.id;
+  const id = type.id
+  if (type.image instanceof File) {
+    const form = new FormData()
+    for (let key in type) form.append(key, type[key] ?? '')
+    form.append('_method', 'PUT')
+    return axiosClient.post(`/type/${id}`, form)
+  }
   type._method = 'PUT'
   return axiosClient.post(`/type/${id}`, type)
 }
@@ -169,4 +180,37 @@ export function removeCategory({commit}, id){
   return axiosClient.delete(`/category/${id}`)
 }
 
+export function getDashboard(){
+  return axiosClient.get('/dashboard')
+}
+
+export function getOrders({commit}, {page = null, perPage = null, status = null, sort_direction = null, sort_field = null}){
+  commit('setOrdersLoading', true)
+  return axiosClient.get('/order', {
+    params: { per_page: perPage, page, status, sort_direction, sort_field }
+  }).then(({data}) => {
+    commit('setOrders', data)
+    commit('setOrdersLoading', false)
+    return data
+  })
+}
+
+export function updateOrderStatus({commit}, {id, status}){
+  return axiosClient.put(`/order/${id}`, { status })
+}
+
+export function getComments({commit}, {page = null, perPage = null, sort_direction = null}){
+  commit('setCommentsLoading', true)
+  return axiosClient.get('/comment', {
+    params: { per_page: perPage, page, sort_direction }
+  }).then(({data}) => {
+    commit('setComments', data)
+    commit('setCommentsLoading', false)
+    return data
+  })
+}
+
+export function removeComment({commit}, id){
+  return axiosClient.delete(`/comment/${id}`)
+}
 

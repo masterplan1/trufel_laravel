@@ -13,13 +13,22 @@ class FillingController extends Controller
     public const ITEMS_PER_REQUEST = 6;
     public function index(Type $type)
     {
-        
         $type = $type->withoutRelations();
+
+        // Сторінка-агрегатор кендібару: показує всі підтипи (is_candybar=1)
+        if ($type->is_candybar_group) {
+            $candybarTypes = Type::where('is_candybar', true)->get();
+            return view('filling.candybar-group', compact('type', 'candybarTypes'));
+        }
+
+        // Звичайний кендібар-підтип (кейпопси, льодяники тощо)
         if($type->is_candybar){
             $categories = $type->categories(6)->get();
             $total_item_count  = $type->categories()->count();
             return view('filling.candybar', compact('categories', 'type', 'total_item_count'));
         }
+
+        // Звичайний тип (торти, капкейки, бенто)
         $fillings = $type->fillings;
         $categories = $type->categories;
         $total_item_count = $type->fillings(null)->count();

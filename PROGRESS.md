@@ -149,23 +149,34 @@
 
 ## Що залишилось зробити
 
-### Пріоритет 1 — Vue.js Admin Panel (`/backend`)
-Адмін-панель ще не оновлювалась. Потрібно:
-- [ ] Оновити стилі під нову палітру
-- [ ] Адаптувати під зміни структури (новий пункт "Каталог" замість Gallery/Fillings)
-- [ ] Перевірити CRUD для типів, категорій, начинок, продуктів
-- [ ] Перевірити сторінку замовлень
+### Пріоритет 3 — Залишилось
+- [ ] OG image — покласти окремий файл `public/img/og-image.jpg` 1200×630px для соцмереж (зараз використовується `logo-image.jpg`)
+- [ ] `APP_URL` в `.env` — поставити реальний домен при деплої (зараз `http://localhost`)
 
-### Пріоритет 2 — Дрібні покращення фронтенду
-- [ ] `product/index.blade.php` — оновити стилі галереї в новій палітрі
-- [ ] `filling/candybar.blade.php` — оновити стилі під нову палітру (сторінка candybar типів)
-- [ ] `testimonials.blade.php` — можливо оновити layout карусельки
-- [ ] Footer — можливо розширити (соцмережі, навігація)
+---
+
+## Виконано (сесія 2)
+
+### Пріоритет 1 — Vue.js Admin Panel
+- [x] `Dashboard.vue` — картки статистики (замовлення по статусах, виручка, каталог, відгуки) + таблиця останніх замовлень
+- [x] `Order.vue` — повна таблиця замовлень з фільтром по статусу, пагінацією, розгорненням деталей позицій, зміною статусу прямо в таблиці
+- [x] `Comment.vue` — таблиця відгуків із зірковим рейтингом та видаленням
+- [x] `Statistic.vue` — прогрес-бари замовлень по статусах, фінансова статистика, статистика каталогу
+- [x] `StatusBadge.vue` — новий компонент бейджу статусу замовлення
+- [x] Vuex store: додано `orders`, `comments` в state, mutations, actions
+- [x] Laravel API: `Api/OrderController` (index, update status), `Api/CommentController` (index, destroy), `Api/DashboardController` (stats)
+- [x] `routes/api.php` — додано маршрути для order, comment, dashboard
+- [x] `OrderItem` model — додано зв'язок `filling()`
+- [x] Стилі вже були в brand палітрі, CRUD для типів/категорій/начинок/галереї перевірено — все працює
+
+### Пріоритет 2 — Фронтенд
+- [x] `product/index.blade.php` — вже був у brand палітрі, додаткових змін не потребував
+- [x] `filling/candybar.blade.php` — вже був у brand палітрі, додаткових змін не потребував
+- [x] `testimonials.blade.php` — виправлено `focus:border-purple-500` → `focus:ring-brand-rose`, додано аватари-ініціали у каруселі, роздільники `border-brand-blush`
+- [x] `footer.blade.php` — розширено: 3-колонковий грід, адреса, навігація, Instagram, copyright
 
 ### Пріоритет 3 — Функціонал
-- [ ] Lazy loading зображень перевірити скрізь (`loading="lazy"` вже додано)
-- [ ] OG image — покласти окремий файл `public/img/og-image.jpg` 1200×630px для соцмереж
-- [ ] `APP_URL` в `.env` — поставити реальний домен (зараз `http://localhost`)
+- [x] Lazy loading — вже додано раніше (`loading="lazy"` скрізь)
 
 ---
 

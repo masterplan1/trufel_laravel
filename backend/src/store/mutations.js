@@ -42,3 +42,19 @@ export function setTypes(state, data){
 export function setTypesLoading(state, loading){
   state.types.loading = loading
 }
+
+export function setOrders(state, data){
+  state.orders.data = data.data
+  state.orders.links = data.meta
+}
+export function setOrdersLoading(state, loading){
+  state.orders.loading = loading
+}
+
+export function setComments(state, data){
+  state.comments.data = data.data
+  state.comments.links = data.meta
+}
+export function setCommentsLoading(state, loading){
+  state.comments.loading = loading
+}

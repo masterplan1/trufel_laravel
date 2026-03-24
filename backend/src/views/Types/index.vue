@@ -37,9 +37,10 @@
           <thead>
             <tr>
               <TableHeaderCell field="id" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">ID</TableHeaderCell>
+              <th class="border-b-2 p-2 text-left">Фото</th>
               <TableHeaderCell field="name" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">Назва</TableHeaderCell>
               <th class="border-b-2 p-2 text-left">Розмірність</th>
-              <th class="border-b-2 p-2 text-left">Кендібар</th>
+              <th class="border-b-2 p-2 text-left">Тип</th>
               <th class="border-b-2 p-2 text-left cursor-pointer bg-gray-100">Дії</th>
             </tr>
           </thead>
@@ -51,6 +52,10 @@
               :style="{'animation-delay': `${index * 0.05}s`}"
             >
               <td class="border-b p-2">{{ type.id }}</td>
+              <td class="border-b p-2">
+                <img v-if="type.image" :src="type.image" class="w-12 h-12 object-cover rounded-lg" alt="">
+                <span v-else class="text-gray-300 text-xs">—</span>
+              </td>
               <td class="border-b p-2 max-w-[200px] whitespace-nowrap overflow-hidden text-ellipsis">{{ type.name }}</td>
               <td class="border-b p-2">
                 <span
@@ -61,11 +66,17 @@
                 </span>
               </td>
               <td class="border-b p-2">
-                <span
-                  class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
-                  :class="type.is_candybar ? 'bg-pink-100 text-pink-800' : 'bg-gray-100 text-gray-600'"
-                >
-                  {{ type.is_candybar ? 'Так' : 'Ні' }}
+                <span v-if="type.is_candybar_group"
+                  class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-800">
+                  Меню кендібар
+                </span>
+                <span v-else-if="type.is_candybar"
+                  class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-pink-100 text-pink-800">
+                  Підтип кендібару
+                </span>
+                <span v-else
+                  class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600">
+                  Звичайний
                 </span>
               </td>
               <td class="border-b p-2">
@@ -129,6 +140,8 @@ const EMPTY_TYPE = {
   name: '',
   weight_quantity: 'quantity',
   is_candybar: false,
+  is_candybar_group: false,
+  image: null,
 }
 
 const typeModal = ref({ ...EMPTY_TYPE })

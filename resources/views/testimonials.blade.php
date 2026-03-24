@@ -9,7 +9,7 @@
         </x-title>
         <div class="pt-12" x-data="testimonialItem({{ count($comments) }})">
             <div @click="isFormOpened = !isFormOpened"
-                class="mx-auto text-brand-rose hover:text-red-400 w-fit transition-colors">
+                class="mx-auto text-brand-rose hover:text-brand-rose-dark w-fit transition-colors">
                 <svg x-show="!isFormOpened" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-12 h-12">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -23,15 +23,15 @@
             </div>
             <div x-cloak
                 class="my-6 max-w-2xl text-xl mx-auto px-2 flex justify-center items-center transition-all duration-500
-          border-b border-t border-gray-200 overflow-hidden"
+          border-b border-t border-brand-blush overflow-hidden"
                 :class="isFormOpened ? 'h-[500px] sm:h-[420px]' : 'h-0'">
                 <form @submit.prevent="formSubmit" action="" class="flex flex-col gap-4 py-6">
                     <h3 class="text-2xl mb-6">Додати відгук</h3>
                     <div class="flex justify-between items-center flex-col sm:flex-row">
                         <label for="" class="mb-2 sm:mb-0">Ваше ім'я</label>
                         <input name="author_name" required minlength="3" x-model="formData.author_name"
-                            class="border-gray-400 p-2 ml-6 border focus:border-purple-500 focus:outline-none focus:ring-purple-500 
-              rounded-md"
+                            class="border-brand-blush p-2 ml-6 border focus:border-brand-rose focus:outline-none focus:ring-brand-rose
+              rounded-xl"
                             placeholder="Ваше ім'я" type="text">
                     </div>
                     <div name="estimation" class="flex justify-between flex-col sm:flex-row">
@@ -53,12 +53,14 @@
                         <label for="" class="mb-2 sm:mb-0">Відгук</label>
                         <textarea name="description" required minlength="3" maxlength="140" x-model="formData.description"
                             placeholder="Ваш відгук, до 140 символів"
-                            class="border-gray-400 p-2 min-h-[120px] min-w-[254px] border focus:border-purple-500 focus:outline-none focus:ring-purple-500 
-              rounded-md"></textarea>
+                            class="border-brand-blush p-2 min-h-[120px] min-w-[254px] border focus:border-brand-rose focus:outline-none focus:ring-brand-rose
+              rounded-xl"></textarea>
                     </div>
                     <button class="button" type="submit">Додати</button>
                 </form>
             </div>
+
+            <!-- Carousel -->
             <div class="flex justify-center sm:gap-8 items-center my-12">
                 <div class="text-brand-rose cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" @click="decreaseAnimationStep" fill="none"
@@ -70,10 +72,13 @@
                 <div class="overflow-hidden w-[288px] lg:w-[864px]">
                     <div class="text-md mt-8 mb-14 flex w-[9999px] transition-all"
                         :style="{ 'transform': `translateX(-${animationItemWidth*animationStep}px)` }">
-                        <template x-if=newComments.length> 0>
+                        <template x-if="newComments.length > 0">
                             <template x-for="newComment in newComments">
                                 <div class="w-[238px] mr-[25px] ml-[25px]">
-                                    <h3 class="text-2xl mb-3" x-text="newComment.author_name"></h3>
+                                    <div class="w-12 h-12 rounded-full bg-brand-blush flex items-center justify-center mx-auto mb-3">
+                                        <span class="text-brand-rose-dark font-semibold text-lg" x-text="newComment.author_name[0]?.toUpperCase()"></span>
+                                    </div>
+                                    <h3 class="text-xl mb-2" x-text="newComment.author_name"></h3>
                                     <div class="flex justify-center mb-3" x-data="{
                                         estimation: newComment.estimation ?? 5,
                                     }">
@@ -81,20 +86,23 @@
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 :fill="estimation >= item ? 'currentColor' : 'none'" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor"
-                                                class="text-brand-rose w-6 h-6 transition-colors cursor-pointer">
+                                                class="text-brand-rose w-5 h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                                             </svg>
                                         </template>
                                     </div>
-                                    <hr class="mb-3">
-                                    <p class="text-left" x-text="newComment.description"></p>
+                                    <hr class="mb-3 border-brand-blush">
+                                    <p class="text-left text-brand-text" x-text="newComment.description"></p>
                                 </div>
                             </template>
                         </template>
                         @foreach ($comments as $comment)
                             <div class="w-[238px] mr-[25px] ml-[25px]">
-                                <h3 class="text-2xl mb-3">{{ $comment->author_name }}</h3>
+                                <div class="w-12 h-12 rounded-full bg-brand-blush flex items-center justify-center mx-auto mb-3">
+                                    <span class="text-brand-rose-dark font-semibold text-lg">{{ mb_strtoupper(mb_substr($comment->author_name, 0, 1)) }}</span>
+                                </div>
+                                <h3 class="text-xl mb-2">{{ $comment->author_name }}</h3>
                                 <div class="flex justify-center mb-3" x-data="{
                                     estimation: {{ $comment->estimation ?? 5 }},
                                 }">
@@ -102,14 +110,14 @@
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             :fill="estimation >= item ? 'currentColor' : 'none'" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor"
-                                            class="text-brand-rose w-6 h-6 transition-colors cursor-pointer">
+                                            class="text-brand-rose w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                                        </svg>
+                                            </svg>
                                     </template>
                                 </div>
-                                <hr class="mb-3">
-                                <p class="text-left">
+                                <hr class="mb-3 border-brand-blush">
+                                <p class="text-left text-brand-text">
                                     {{ $comment->description }}
                                 </p>
                             </div>
