@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Helpers\Telegram;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider;
 use App\View\Composers\MetaComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -18,8 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        EventServiceProvider::disableEventDiscovery();
+
         $this->app->bind(Telegram::class, function ($app){
-            return new Telegram(new Http(), env('TELEGRAM_BOT_ID'));
+            return new Telegram(new Http(), config('telegram.bot_id'));
         });
     }
 

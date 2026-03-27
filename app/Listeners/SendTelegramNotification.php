@@ -15,7 +15,7 @@ class SendTelegramNotification
 
     public function handle(OrderStore $event): void
     {
-        $chatIds = config('telegram_chat_ids');
+        $chatIds = config('telegram.chat_ids', []);
 
         try {
             $order = $event->order->load([
