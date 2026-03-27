@@ -1,11 +1,25 @@
-Нове замовлення № {{ $order->id }}
-на {{ $order->orderDetail->order_date }},
-від {{ $order->orderDetail->customer_name }},
-тел. {{ $order->orderDetail->customer_phone }},
+🛒 <b>Нове замовлення #{{ $order->id }}</b>
 
+👤 <b>{{ $order->orderDetail->customer_name }}</b>
+📞 {{ $order->orderDetail->customer_phone }}
+📅 Дата отримання: <b>{{ \Carbon\Carbon::parse($order->orderDetail->order_date)->format('d.m.Y') }}</b>
+@if($order->orderDetail->comment)
+💬 Коментар: {{ $order->orderDetail->comment }}
+@endif
+
+━━━━━━━━━━━━━━━━
+📦 <b>Склад замовлення:</b>
 @foreach ($order->orderItems as $item)
-{{ $fillings[$item->filling_id]['title'] }} {{ $item->weight ?? $item->quantity }} @if ($item->weight) кг. @else шт.  @endif 
+@php
+    $filling = $item->filling;
+    $type = $filling->category->type ?? null;
+    $isWeight = $type && $type->weight_quantity === 'weight';
+    $amount = $isWeight
+        ? number_format($item->unit_price * $item->weight, 0, '.', ' ')
+        : number_format($item->unit_price * $item->quantity, 0, '.', ' ');
+@endphp
+▪ {{ $filling->title }}
+  {{ $isWeight ? ($item->weight . ' кг × ' . $item->unit_price . ' грн/кг') : ($item->quantity . ' шт × ' . $item->unit_price . ' грн') }} = <b>{{ $amount }} грн</b>
 @endforeach
-
-Ціна {{ $order->total_price }},
-
+━━━━━━━━━━━━━━━━
+💰 <b>Разом: {{ number_format($order->total_price, 0, '.', ' ') }} грн</b>
