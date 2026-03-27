@@ -1,4 +1,4 @@
-<header class="text-2xl bg-[url('/public/img/logo-image.jpg')] h-[90vh] bg-cover bg-center relative">
+<header class="text-2xl bg-[url('/public/img/logo-image.jpg')] h-[58vh] min-h-[420px] bg-cover bg-center relative">
 
     {{-- toast --}}
     @if (session()->has('message'))
@@ -16,8 +16,8 @@
     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/90"></div>
 
     <!-- Text block -->
-    <div class="absolute top-[28%] right-[6%] w-[72%] md:w-[32%]">
-        <p class="font-amatic text-6xl md:text-7xl md:leading-[82px] text-brand-text drop-shadow-sm">
+    <div class="absolute top-[22%] right-[6%] w-[72%] md:w-[32%]">
+        <p class="font-amatic text-5xl md:text-7xl md:leading-[82px] text-brand-text drop-shadow-sm">
             тортики, які створені
             з любов'ю
             <span class="text-brand-rose pl-2">
@@ -30,11 +30,6 @@
         <p class="mt-6 font-caveat text-2xl md:text-3xl text-brand-muted">
             Скуштувавши це, ви залишитеся з нами назавжди!
         </p>
-        <a href="{{ route('filling', App\Models\Type::first()) }}"
-            class="inline-block mt-8 px-8 py-3 bg-brand-rose text-white rounded-full text-xl font-alice
-            hover:bg-brand-rose-dark transition-colors duration-200 shadow-md">
-            Переглянути каталог
-        </a>
     </div>
 
     @include('layouts.nav-menu')

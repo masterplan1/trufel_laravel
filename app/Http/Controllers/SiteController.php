@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Filling;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -28,8 +29,9 @@ class SiteController extends Controller
             ]);
 
         $recentComments = Comment::latest()->limit(3)->get();
+        $menuTypes = Type::where('is_candybar', false)->get();
 
-        return view('welcome', compact('featuredFillings', 'recentComments'));
+        return view('welcome', compact('featuredFillings', 'recentComments', 'menuTypes'));
     }
 
     public function contacts()

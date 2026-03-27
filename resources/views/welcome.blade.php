@@ -1,5 +1,33 @@
 <x-app-layout :is_not_title_page="false">
 
+    {{-- ===== CATEGORY MOSAIC ===== --}}
+    @if($menuTypes->isNotEmpty())
+    <section class="max-w-5xl mx-auto px-4 pt-10 pb-4">
+        <div class="text-center mb-8">
+            <h2 class="section-title">Каталог</h2>
+            <p class="text-brand-muted text-lg mt-1">Оберіть категорію та знайдіть свій смак</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            @foreach ($menuTypes as $type)
+            <a href="{{ route('filling', $type) }}"
+                class="group block rounded-2xl overflow-hidden shadow-sm border border-brand-blush hover:shadow-md hover:-translate-y-1 transition-all duration-300 bg-white">
+                @if ($type->image)
+                    <img src="{{ $type->image }}" alt="{{ $type->name }}"
+                        class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                @else
+                    <x-img-placeholder class="w-full h-36" />
+                @endif
+                <div class="py-3 px-3 text-center">
+                    <span class="font-kurale text-base text-brand-text group-hover:text-brand-rose transition-colors duration-200">
+                        {{ $type->name }}
+                    </span>
+                </div>
+            </a>
+            @endforeach
+        </div>
+    </section>
+    @endif
+
     {{-- ===== FEATURED PRODUCTS ===== --}}
     <section class="max-w-5xl mx-auto px-4 pt-16 pb-12">
 

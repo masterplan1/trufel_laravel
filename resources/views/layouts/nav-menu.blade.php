@@ -88,7 +88,7 @@
             </span>
           </a>
           <ul x-cloak x-show="openCatalogMenu" x-transition
-            class="absolute left-0 bg-brand-cream text-left shadow-lg rounded-xl border border-brand-blush overflow-hidden min-w-[160px] z-50">
+            class="absolute top-full left-0 bg-brand-cream text-left shadow-lg rounded-b-xl border border-t-0 border-brand-blush overflow-hidden min-w-[160px] z-50">
             @foreach ($types as $type)
               <li class="cursor-pointer hover:bg-brand-blush transition-colors">
                 <a class="py-2.5 px-5 block" href="{{ route('filling', $type) }}">{{ $type->name }}</a>

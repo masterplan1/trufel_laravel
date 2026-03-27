@@ -48,7 +48,7 @@
   </style>
 </head>
 
-<body x-data="" @class(['font-alice', 'text-brand-text', 'bg-brand-cream', 'flex', 'flex-col', 'h-screen' => $is_not_title_page])>
+<body x-data="" @class(['font-alice', 'text-brand-text', 'bg-brand-cream', 'flex', 'flex-col', 'overflow-x-hidden', 'h-screen' => $is_not_title_page])>
   @if (Request::is('/'))
     @include('layouts.navigation-title')
   @else
