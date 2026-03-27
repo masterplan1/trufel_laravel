@@ -102,99 +102,71 @@ class FakeDataSeeder extends Seeder
 
     public function run(): void
     {
-        $this->command->info('Seeding fillings...');
+        $this->command->info('Seeding types, categories and fillings...');
 
-        // ─── Торт: Бісквітні (category_id=1) ───
+        // ─── Торт ───
+        $tort = Type::firstOrCreate(['name' => 'Торт'], [
+            'weight_quantity' => 'weight', 'is_candybar' => false, 'is_candybar_group' => false,
+        ]);
+        $biskvitni = Category::firstOrCreate(['name' => 'Бісквітні', 'type_id' => $tort->id]);
         foreach (self::BISKVIТNI_FILLINGS as $data) {
-            Filling::create([
-                'title'       => $data['title'],
-                'description' => $data['desc'],
-                'image'       => self::FILLING_IMAGE,
-                'unit_price'  => $data['price'],
-                'min_weight'  => 1,
-                'min_quantity'=> null,
-                'category_id' => 1,
+            Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $biskvitni->id], [
+                'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                'unit_price' => $data['price'], 'min_weight' => 1, 'min_quantity' => null,
             ]);
         }
-
-        // ─── Торт: Мусові (category_id=2) ───
+        $musovi = Category::firstOrCreate(['name' => 'Мусові', 'type_id' => $tort->id]);
         foreach (self::MUSOVI_FILLINGS as $data) {
-            Filling::create([
-                'title'       => $data['title'],
-                'description' => $data['desc'],
-                'image'       => self::FILLING_IMAGE,
-                'unit_price'  => $data['price'],
-                'min_weight'  => 1,
-                'min_quantity'=> null,
-                'category_id' => 2,
+            Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $musovi->id], [
+                'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                'unit_price' => $data['price'], 'min_weight' => 1, 'min_quantity' => null,
             ]);
         }
 
-        // ─── Бенто: нові категорії + начинки ───
-        $bentoType = Type::find(3);
-        if ($bentoType) {
-            $bentoClassic = Category::create(['name' => 'Класичні', 'type_id' => 3]);
-            foreach (self::BENTO_CLASSIC_FILLINGS as $data) {
-                Filling::create([
-                    'title'       => $data['title'],
-                    'description' => $data['desc'],
-                    'image'       => self::FILLING_IMAGE,
-                    'unit_price'  => $data['price'],
-                    'min_weight'  => null,
-                    'min_quantity'=> 1,
-                    'category_id' => $bentoClassic->id,
-                ]);
-            }
-
-            $bentoFruit = Category::create(['name' => 'Фруктові', 'type_id' => 3]);
-            foreach (self::BENTO_FRUIT_FILLINGS as $data) {
-                Filling::create([
-                    'title'       => $data['title'],
-                    'description' => $data['desc'],
-                    'image'       => self::FILLING_IMAGE,
-                    'unit_price'  => $data['price'],
-                    'min_weight'  => null,
-                    'min_quantity'=> 1,
-                    'category_id' => $bentoFruit->id,
+        // ─── Капкейки ───
+        $cupcakes = Type::firstOrCreate(['name' => 'Капкейки'], [
+            'weight_quantity' => 'quantity', 'is_candybar' => true, 'is_candybar_group' => false,
+        ]);
+        foreach (self::CUPCAKE_CATEGORIES as $catData) {
+            $cat = Category::firstOrCreate(['name' => $catData['name'], 'type_id' => $cupcakes->id]);
+            foreach ($catData['fillings'] as $data) {
+                Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $cat->id], [
+                    'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                    'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 6,
                 ]);
             }
         }
 
-        // ─── Капкейки: candybar категорії з начинками ───
-        $cupcakeType = Type::find(2);
-        if ($cupcakeType) {
-            foreach (self::CUPCAKE_CATEGORIES as $catData) {
-                $cat = Category::create(['name' => $catData['name'], 'type_id' => 2]);
-                foreach ($catData['fillings'] as $data) {
-                    Filling::create([
-                        'title'       => $data['title'],
-                        'description' => $data['desc'],
-                        'image'       => self::FILLING_IMAGE,
-                        'unit_price'  => $data['price'],
-                        'min_weight'  => null,
-                        'min_quantity'=> 6,
-                        'category_id' => $cat->id,
-                    ]);
-                }
-            }
+        // ─── Бенто ───
+        $bento = Type::firstOrCreate(['name' => 'Бенто'], [
+            'weight_quantity' => 'quantity', 'is_candybar' => false, 'is_candybar_group' => false,
+        ]);
+        $bentoClassic = Category::firstOrCreate(['name' => 'Класичні', 'type_id' => $bento->id]);
+        foreach (self::BENTO_CLASSIC_FILLINGS as $data) {
+            Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $bentoClassic->id], [
+                'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 1,
+            ]);
+        }
+        $bentoFruit = Category::firstOrCreate(['name' => 'Фруктові', 'type_id' => $bento->id]);
+        foreach (self::BENTO_FRUIT_FILLINGS as $data) {
+            Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $bentoFruit->id], [
+                'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 1,
+            ]);
         }
 
-        // ─── Кейпопси: candybar категорії з начинками ───
-        $cakepopsType = Type::find(4);
-        if ($cakepopsType) {
-            foreach (self::CAKEPOPS_CATEGORIES as $catData) {
-                $cat = Category::create(['name' => $catData['name'], 'type_id' => 4]);
-                foreach ($catData['fillings'] as $data) {
-                    Filling::create([
-                        'title'       => $data['title'],
-                        'description' => $data['desc'],
-                        'image'       => self::FILLING_IMAGE,
-                        'unit_price'  => $data['price'],
-                        'min_weight'  => null,
-                        'min_quantity'=> 10,
-                        'category_id' => $cat->id,
-                    ]);
-                }
+        // ─── Кейпопси ───
+        $cakepops = Type::firstOrCreate(['name' => 'Кейпопси'], [
+            'weight_quantity' => 'quantity', 'is_candybar' => true, 'is_candybar_group' => false,
+        ]);
+        foreach (self::CAKEPOPS_CATEGORIES as $catData) {
+            $cat = Category::firstOrCreate(['name' => $catData['name'], 'type_id' => $cakepops->id]);
+            foreach ($catData['fillings'] as $data) {
+                Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $cat->id], [
+                    'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
+                    'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 10,
+                ]);
             }
         }
 
