@@ -17,6 +17,8 @@
   <meta name="robots"       content="{{ $meta['robots'] ?? (config('app.indexable') ? 'index, follow' : 'noindex, nofollow') }}">
   <meta name="author"       content="{{ config('seo.site_name', 'Trufel') }}">
   <meta name="theme-color"  content="#C9847A">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/favicon.ico" type="image/x-icon">
   <link rel="canonical"     href="{{ $meta['canonical'] ?? request()->url() }}">
 
   {{-- ── Open Graph ────────────────────────────────────── --}}

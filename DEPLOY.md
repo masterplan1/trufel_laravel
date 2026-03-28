@@ -97,6 +97,32 @@ chown -R www-data:www-data storage bootstrap/cache
 
 ---
 
+### Крок 5.5. Створити БД і надати доступ MySQL юзеру
+
+На сервері вже є MySQL юзер від іншого проекту — створювати нового не потрібно,
+достатньо додати йому привілеї для нової бази:
+
+```bash
+mysql -u root -p
+```
+
+```sql
+-- Створити нову базу для проекту
+CREATE DATABASE trufel_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Дати існуючому юзеру доступ до нової БД
+GRANT ALL PRIVILEGES ON trufel_db.* TO 'existing_user'@'localhost';
+FLUSH PRIVILEGES;
+
+EXIT;
+```
+
+> Замість `existing_user` — ім'я вашого поточного MySQL юзера.
+> В `.env` вказати ті самі `DB_USERNAME` і `DB_PASSWORD` що й для іншого проекту,
+> тільки `DB_DATABASE=trufel_db`.
+
+---
+
 ### Крок 6. Запустити міграції та сідери
 
 ```bash
