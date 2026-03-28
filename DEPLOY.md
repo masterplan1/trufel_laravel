@@ -48,6 +48,8 @@ cd trufel-site
 ```bash
 composer install --no-dev --optimize-autoloader
 ```
+DB_USERNAME=laravel_user
+DB_PASSWORD=aZas98&SWssw
 
 ---
 

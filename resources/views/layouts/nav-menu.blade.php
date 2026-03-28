@@ -16,7 +16,7 @@
   <!-- Mobile Nav -->
   <nav x-cloak :class="showMobileMenu ? 'left-0' : '-left-[220px]'"
     x-transition class="block md:hidden fixed top-0 bottom-0 bg-brand-cream w-[220px] h-full pt-20 shadow-xl transition-all z-30">
-    <ul @click.outside="showMobileMenu = false">
+    <ul>
       <li><a class="p-navbar-item block hover:bg-brand-blush transition-colors" href="/">Головна</a></li>
       <li class="relative">
         <a @click="openMobileCatalogMenu = !openMobileCatalogMenu"
