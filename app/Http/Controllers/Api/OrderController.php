@@ -54,6 +54,12 @@ class OrderController extends Controller
         ]);
     }
 
+    public function destroy(Order $order)
+    {
+        $order->delete(); // soft delete — запис залишається в БД
+        return response()->noContent();
+    }
+
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([

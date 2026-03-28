@@ -152,7 +152,7 @@ class MetaComposer
     {
         return $this->build(
             title: 'Контакти — Кондитерська в Обухові',
-            description: 'Контакти кондитерської Trufel. Адреса: Обухів, вул. Молодіжна 2. '
+            description: 'Контакти кондитерської Trufel. Адреса: Обухів, вул. Дзюбівка 9 . '
                 . 'Телефон: +380934978646. Instagram: tru._.fel.',
             keywords: 'контакти, кондитерська Обухів, Trufel адреса, замовити торт Обухів',
             ogType: 'website',

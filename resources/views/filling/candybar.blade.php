@@ -68,7 +68,7 @@
                                         inset-0 z-10 bg-brand-text/80 text-white p-4 overflow-hidden rounded-t-2xl">
                                         <h3 class="text-xl font-semibold underline mb-2" x-text="newFilling.title"></h3>
                                         <template x-for="f in newFilling.fillings">
-                                            <p class="text-left text-sm leading-relaxed" x-text="f.description"></p>
+                                            <p class="text-left text-sm leading-relaxed whitespace-pre-line" x-text="f.description"></p>
                                         </template>
                                     </div>
                                     <img class="w-full h-[60vw] sm:h-[32vw] lg:h-[240px] object-cover

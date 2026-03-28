@@ -14,7 +14,7 @@
           <span>fel</span>
         </div>
         <p class="text-white/80 text-sm mb-1">м. Обухів, Київська область</p>
-        <p class="text-white/80 text-sm mb-3">вул. Молодіжна, 2</p>
+        <p class="text-white/80 text-sm mb-3">вул. Дзюбівка, 9</p>
         <a href="tel:+380934978646" class="text-white hover:text-white/70 transition-colors text-lg font-medium">
           +38 093 497 86 46
         </a>

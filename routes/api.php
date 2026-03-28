@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/order', [OrderController::class, 'index']);
     Route::put('/order/{order}', [OrderController::class, 'update']);
+    Route::delete('/order/{order}', [OrderController::class, 'destroy']);
     Route::get('/comment', [CommentController::class, 'index']);
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy']);
 });

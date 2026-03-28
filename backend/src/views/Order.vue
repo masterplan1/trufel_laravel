@@ -60,15 +60,23 @@
                 </td>
                 <td class="border-b p-2 text-gray-500">{{ order.created_at }}</td>
                 <td class="border-b p-2" @click.stop>
-                  <select
-                    v-model="order.status"
-                    @change="changeStatus(order)"
-                    class="text-xs border border-gray-200 rounded px-1 py-1 focus:ring-brand-rose focus:border-brand-rose"
-                  >
-                    <option value="new">Нове</option>
-                    <option value="active">В роботі</option>
-                    <option value="completed">Виконано</option>
-                  </select>
+                  <div class="flex items-center gap-2">
+                    <select
+                      v-model="order.status"
+                      @change="changeStatus(order)"
+                      class="text-xs border border-gray-200 rounded px-1 py-1 focus:ring-brand-rose focus:border-brand-rose"
+                    >
+                      <option value="new">Нове</option>
+                      <option value="active">В роботі</option>
+                      <option value="completed">Виконано</option>
+                    </select>
+                    <button @click="archiveOrder(order.id)" title="Архівувати замовлення"
+                      class="text-gray-400 hover:text-red-400 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                      </svg>
+                    </button>
+                  </div>
                 </td>
               </tr>
               <!-- Expanded items -->
@@ -163,6 +171,12 @@ function toggleExpand(id) {
 
 function changeStatus(order) {
   store.dispatch('updateOrderStatus', { id: order.id, status: order.status })
+}
+
+function archiveOrder(id) {
+  if (confirm('Архівувати замовлення? Воно зникне зі списку, але збережеться в базі даних.')) {
+    store.dispatch('archiveOrder', id).then(() => getOrders({}))
+  }
 }
 
 onMounted(() => getOrders({}))

@@ -200,6 +200,10 @@ export function updateOrderStatus({commit}, {id, status}){
   return axiosClient.put(`/order/${id}`, { status })
 }
 
+export function archiveOrder({commit}, id){
+  return axiosClient.delete(`/order/${id}`)
+}
+
 export function getComments({commit}, {page = null, perPage = null, sort_direction = null}){
   commit('setCommentsLoading', true)
   return axiosClient.get('/comment', {
