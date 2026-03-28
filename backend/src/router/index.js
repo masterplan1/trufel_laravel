@@ -13,7 +13,7 @@ import AppLayout from '../components/AppLayout.vue'
 import store from '../store'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/'),
   routes: [
     {
       path: '/',

@@ -1,0 +1,52 @@
+{
+  "public/fonts/Alice-Regular.ttf": {
+    "file": "assets/Alice-Regular-3b7ea628.ttf",
+    "src": "public/fonts/Alice-Regular.ttf"
+  },
+  "public/fonts/AmaticSC-Regular.ttf": {
+    "file": "assets/AmaticSC-Regular-f3772587.ttf",
+    "src": "public/fonts/AmaticSC-Regular.ttf"
+  },
+  "public/fonts/BadScript-Regular.ttf": {
+    "file": "assets/BadScript-Regular-735d1d15.ttf",
+    "src": "public/fonts/BadScript-Regular.ttf"
+  },
+  "public/fonts/Caveat-VariableFont_wght.ttf": {
+    "file": "assets/Caveat-VariableFont_wght-263493f0.ttf",
+    "src": "public/fonts/Caveat-VariableFont_wght.ttf"
+  },
+  "public/fonts/Kurale-Regular.ttf": {
+    "file": "assets/Kurale-Regular-8630a016.ttf",
+    "src": "public/fonts/Kurale-Regular.ttf"
+  },
+  "public/fonts/MarckScript-Regular.ttf": {
+    "file": "assets/MarckScript-Regular-672b58f8.ttf",
+    "src": "public/fonts/MarckScript-Regular.ttf"
+  },
+  "public/img/footer-image.jpg": {
+    "file": "assets/footer-image-9e390260.jpg",
+    "src": "public/img/footer-image.jpg"
+  },
+  "public/img/logo-image.jpg": {
+    "file": "assets/logo-image-84314e34.jpg",
+    "src": "public/img/logo-image.jpg"
+  },
+  "public/img/svg/cupcake-icon.svg": {
+    "file": "assets/cupcake-icon-c0be67d6.svg",
+    "src": "public/img/svg/cupcake-icon.svg"
+  },
+  "public/img/svg/wellcome-cake-icon.svg": {
+    "file": "assets/wellcome-cake-icon-82a2551f.svg",
+    "src": "public/img/svg/wellcome-cake-icon.svg"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-28171b6f.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-29d6737f.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}
