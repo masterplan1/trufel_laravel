@@ -57,7 +57,7 @@ class FillingController extends Controller
         $offset = $request->post('offset', 0);
         $limit = self::ITEMS_PER_REQUEST;
         return [
-            'fillings' => CandybarResource::collection(Category::where('type_id', $type->id)->with('fillings')->offset($offset)->limit($limit)->get()), 
+            'fillings' => CandybarResource::collection(Category::where('type_id', $type->id)->with(['fillings' => fn($q) => $q->latest()])->latest()->offset($offset)->limit($limit)->get()), 
             'items_count' => 0
         ];
     }

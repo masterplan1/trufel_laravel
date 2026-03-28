@@ -14,7 +14,7 @@
   {{-- ── Core SEO ──────────────────────────────────────── --}}
   <meta name="description"  content="{{ $meta['description'] ?? '' }}">
   <meta name="keywords"     content="{{ $meta['keywords'] ?? '' }}">
-  <meta name="robots"       content="{{ $meta['robots'] ?? 'index, follow' }}">
+  <meta name="robots"       content="{{ $meta['robots'] ?? (config('app.indexable') ? 'index, follow' : 'noindex, nofollow') }}">
   <meta name="author"       content="{{ config('seo.site_name', 'Trufel') }}">
   <meta name="theme-color"  content="#C9847A">
   <link rel="canonical"     href="{{ $meta['canonical'] ?? request()->url() }}">

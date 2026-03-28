@@ -16,6 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'indexable' => env('APP_INDEXABLE', true),
 
     /*
     |--------------------------------------------------------------------------

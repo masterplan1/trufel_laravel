@@ -32,10 +32,10 @@ class Type extends Model
         return $this->hasMany(Category::class)->limit($limit);
     }
     public function fillings($limit = 6){
-        return $this->hasManyThrough(Filling::class, Category::class)->limit($limit);
+        return $this->hasManyThrough(Filling::class, Category::class)->latest('fillings.id')->limit($limit);
     }
     public function products($limit = 6){
-        return $this->hasManyThrough(Product::class, Category::class)->limit($limit);
+        return $this->hasManyThrough(Product::class, Category::class)->latest('products.id')->limit($limit);
     }
     // public function fillings($limit = 6, $offset = 0){
     //     return $this->hasManyThrough(Filling::class, Category::class)->offset($offset)->limit($limit);
@@ -60,6 +60,6 @@ class Type extends Model
         if($offset){
             $query->offset($offset);
         }
-        return $query->limit($limit)->get();
+        return $query->orderBy('f.id', 'desc')->limit($limit)->get();
     }
 }

@@ -12,6 +12,7 @@ class SiteController extends Controller
     public function index()
     {
         $featuredFillings = Filling::with('category.type')
+            ->latest()
             ->limit(6)
             ->get()
             ->map(fn($filling) => [
