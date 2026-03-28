@@ -13,6 +13,7 @@ class SiteController extends Controller
     {
         $featuredFillings = Filling::with('type')
             ->whereNotNull('type_id')
+            ->whereHas('type', fn($q) => $q->where('is_candybar', false))
             ->latest()
             ->limit(6)
             ->get()
@@ -27,6 +28,7 @@ class SiteController extends Controller
                 'type_name'            => $filling->type->name,
                 'type_weight_quantity' => $filling->type->weight_quantity,
                 'type_is_candybar'     => $filling->type->is_candybar,
+                'description'          => $filling->description,
                 'type_route'           => route('filling', $filling->type),
             ]);
 

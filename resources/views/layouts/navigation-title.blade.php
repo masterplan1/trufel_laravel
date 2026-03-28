@@ -1,5 +1,5 @@
-<header class="text-2xl bg-[url('/public/img/logo-image.jpg')] h-[58vh] min-h-[420px] bg-cover bg-center relative">
-
+<header class="text-2xl bg-[url('/public/img/logo-image.jpg')] h-[42vh] min-h-[420px] bg-cover bg-center relative">
+<div class="absolute inset-0 bg-white/70"></div>
     {{-- toast --}}
     @if (session()->has('message'))
         <div x-data="{
@@ -13,7 +13,7 @@
     {{-- /toast --}}
 
     <!-- Gradient overlay -->
-    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/90"></div>
+    <!-- <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white/90"></div> -->
 
     <!-- Text block -->
     <div class="absolute top-[22%] right-[6%] w-[72%] md:w-[32%]">

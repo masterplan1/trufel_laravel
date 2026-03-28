@@ -16,7 +16,7 @@ class CartController extends Controller
         $fillings_ids = Arr::pluck($cartItems, 'filling_id');
         $cartItems = Arr::keyBy($cartItems, 'filling_id');
 
-        $fillings = Filling::whereIn('id', $fillings_ids)->get();
+        $fillings = Filling::with('type', 'category.fillings')->whereIn('id', $fillings_ids)->get();
         // $total = array_reduce($cartItems, fn($carry, $item) => $carry + $item['quantity']*$item['price'], 0);
         return view('cart.index', compact('cartItems', 'fillings'));
     }
@@ -30,8 +30,8 @@ class CartController extends Controller
         $isFound = false;
         foreach ($cartItems as &$cartItem) {
             if ($cartItem['filling_id'] === $filling->id) {
-                $cartItem['weight'] = $filling->type()->weight_quantity === 'weight' ? $totalAmount : null;
-                $cartItem['quantity'] = $filling->type()->weight_quantity === 'weight' ? 1 : $totalAmount;
+                $cartItem['weight'] = $filling->type->weight_quantity === 'weight' ? $totalAmount : null;
+                $cartItem['quantity'] = $filling->type->weight_quantity === 'weight' ? 1 : $totalAmount;
                 $isFound = true;
                 break;
             }
@@ -39,8 +39,8 @@ class CartController extends Controller
         if (!$isFound) {
             $cartItems[] = [
                 'filling_id' => $filling->id,
-                'weight' => $filling->type()->weight_quantity === 'weight' ? $totalAmount : null,
-                'quantity' => $filling->type()->weight_quantity === 'weight' ? 1 : $totalAmount,
+                'weight' => $filling->type->weight_quantity === 'weight' ? $totalAmount : null,
+                'quantity' => $filling->type->weight_quantity === 'weight' ? 1 : $totalAmount,
                 'price' => $filling->unit_price
             ];
         }
@@ -63,7 +63,7 @@ class CartController extends Controller
     {
         $newFillingId = $request->post('new_filling_id');
         $newFilling = Filling::find($newFillingId);
-        if ($newFilling->type()->is_candybar && $filling->type()->is_candybar) {
+        if ($newFilling->type->is_candybar && $filling->type->is_candybar) {
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
             foreach ($cartItems as &$cartItem) {
                 if ($cartItem['filling_id'] === $filling->id) {

@@ -56,12 +56,12 @@
           {{-- Filling name / select --}}
           <div>
             <p class="text-brand-muted text-sm mb-1.5">Начинка</p>
-            <template x-if="$store.cart.currentFilling.type_is_candybar == 0">
+            <template x-if="!$store.cart.currentFilling.type_is_candybar">
               <div class="bg-brand-blush rounded-xl px-4 py-2.5 text-brand-text truncate"
                    x-text="$store.cart.currentFilling.title">
               </div>
             </template>
-            <template x-if="$store.cart.currentFilling.type_is_candybar == 1">
+            <template x-if="!!$store.cart.currentFilling.type_is_candybar">
               <select
                 :disabled="isCandybarSelectDisabled"
                 x-model="candybarFillingId"

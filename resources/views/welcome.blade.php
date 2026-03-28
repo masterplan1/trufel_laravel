@@ -41,6 +41,11 @@
             @foreach ($featuredFillings as $filling)
                 <div x-data="{ filling: {{ Js::from($filling) }} }" class="card flex flex-col">
                     <div class="relative overflow-hidden">
+                        <div class="opacity-0 hover:opacity-100 transition-all duration-300 absolute
+                            inset-0 z-10 bg-brand-text/80 text-white p-4 overflow-hidden rounded-t-2xl">
+                            <h3 class="text-xl font-semibold underline mb-2">{{ $filling['title'] }}</h3>
+                            <p class="text-left text-sm leading-relaxed whitespace-pre-line">{{ $filling['description'] }}</p>
+                        </div>
                         <img class="w-full h-[220px] object-cover hover:scale-105 transition-transform duration-500"
                             src="{{ $filling['image'] }}" alt="{{ $filling['title'] }}" loading="lazy">
                     </div>
@@ -74,7 +79,7 @@
     </section>
 
     {{-- ===== HOW TO ORDER ===== --}}
-    <section class="py-16" style="width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; background:#F0DDD9;">
+    <section class="py-16 bg-brand-blush" style="width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;">
         <div class="max-w-5xl mx-auto px-4">
 
             <div class="text-center mb-12">

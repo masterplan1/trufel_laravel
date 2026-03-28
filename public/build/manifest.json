@@ -28,7 +28,7 @@
     "src": "public/img/footer-image.jpg"
   },
   "public/img/logo-image.jpg": {
-    "file": "assets/logo-image-84314e34.jpg",
+    "file": "assets/logo-image-3a48bdd1.jpg",
     "src": "public/img/logo-image.jpg"
   },
   "public/img/svg/cupcake-icon.svg": {
@@ -40,12 +40,12 @@
     "src": "public/img/svg/wellcome-cake-icon.svg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-a8676566.css",
+    "file": "assets/app-f6f1407b.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/js/app.js": {
-    "file": "assets/app-29d6737f.js",
+    "file": "assets/app-55e236ec.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }

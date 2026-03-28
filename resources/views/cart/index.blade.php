@@ -10,14 +10,15 @@
                         'title' => $filling->title,
                         'image' => $filling->image,
                         'category' => $filling->category,
-                        'candybar_select_items' => $filling->type()->is_candybar ? $filling->category->fillings : null,
+                        'type' => $filling->type,
+                        'candybar_select_items' => $filling->type->is_candybar ? ($filling->category?->fillings ?? []) : null,
                         'price' => $cartItems[$filling->id]['price'],
                         'weight' => $cartItems[$filling->id]['weight'] ?? null,
                         'quantity' => $cartItems[$filling->id]['quantity'] ?? 1,
                         'updateUrl' => route('cart.add', $filling),
                         'changeUrl' => route('cart.change-filling', $filling),
                         'removeUrl' => route('cart.remove', $filling),
-                        'hasWeight' => $filling->type()->weight_quantity === 'weight',
+                        'hasWeight' => $filling->type->weight_quantity === 'weight',
                     ],
                 ),
             ) }},
@@ -77,11 +78,11 @@
                                     <div class="flex flex-col gap-3">
 
                                         {{-- Filling selector --}}
-                                        <template x-if="!filling.category.type.is_candybar">
+                                        <template x-if="!filling.type.is_candybar">
                                             <p class="bg-brand-blush px-3 py-1.5 rounded-lg text-brand-text"
                                                 x-text="getFillingTitle"></p>
                                         </template>
-                                        <template x-if="filling.category.type.is_candybar">
+                                        <template x-if="filling.type.is_candybar">
                                             <select @change="handleFillingSelecet" x-model="candybarFillingId"
                                                 class="bg-brand-blush px-3 py-1.5 rounded-lg text-brand-text border-0 focus:ring-brand-rose">
                                                 <template x-for="item in filling.candybar_select_items" :key="item.id">
@@ -94,8 +95,8 @@
                                         {{-- Weight / Quantity --}}
                                         <div class="flex items-center gap-3">
                                             <span class="text-brand-muted text-sm w-20"
-                                                x-text="filling.category.type.weight_quantity === 'weight' ? 'Вага' : 'Кількість'"></span>
-                                            <template x-if="filling.category.type.weight_quantity === 'weight'">
+                                                x-text="filling.type.weight_quantity === 'weight' ? 'Вага' : 'Кількість'"></span>
+                                            <template x-if="filling.type.weight_quantity === 'weight'">
                                                 <div class="flex items-center gap-2">
                                                     <div class="flex items-center bg-brand-blush rounded-lg overflow-hidden">
                                                         <button class="px-3 py-1.5 text-xl hover:bg-brand-rose hover:text-white transition-colors"
@@ -107,7 +108,7 @@
                                                     <span class="text-brand-muted text-sm">кг</span>
                                                 </div>
                                             </template>
-                                            <template x-if="filling.category.type.weight_quantity === 'quantity'">
+                                            <template x-if="filling.type.weight_quantity === 'quantity'">
                                                 <div class="flex items-center gap-2">
                                                     <div class="flex items-center bg-brand-blush rounded-lg overflow-hidden">
                                                         <button class="px-3 py-1.5 text-xl hover:bg-brand-rose hover:text-white transition-colors"

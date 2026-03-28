@@ -68,11 +68,11 @@ class OrderController extends Controller
         
         foreach ($cartItems as &$item){
             if($fillings[$item['filling_id']]){
-                if($fillings[$item['filling_id']]->type()->weight_quantity === 'weight'){
+                if($fillings[$item['filling_id']]->type->weight_quantity === 'weight'){
                     $item['isCake'] = true;
                     $cakeFound = true;
                 }
-                if($fillings[$item['filling_id']]->type()->is_candybar === 1){
+                if($fillings[$item['filling_id']]->type->is_candybar === 1){
                     $candybarFound = true;
                     // $item['isCandybar'] = true;
                 }

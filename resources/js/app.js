@@ -41,10 +41,10 @@ document.addEventListener('alpine:init', () => {
     filling,
     candybarFillingId: null,
     getHeaderTitle() {
-      return this.filling.category.type.is_candybar ? this.filling.category.name : this.filling.category.type.name
+      return this.filling.type.is_candybar ? (this.filling.category?.name ?? this.filling.title) : this.filling.type.name
     },
     getFillingTitle() {
-      return this.filling.category.type.is_candybar ? this.filling.category.name : this.filling.title
+      return this.filling.type.is_candybar ? (this.filling.category?.name ?? this.filling.title) : this.filling.title
     },
     handleWeightIncrease() {
       this.filling.weight = +this.filling.weight + 0.5
@@ -119,7 +119,9 @@ document.addEventListener('alpine:init', () => {
     },
     addToCart() {
       if (this.$store.cart.currentFilling.type_is_candybar && this.candybarFillingId === null) {
-        this.candybarFillingId = this.$store.cart.currentFilling.fillings[0].id
+        const fillings = this.$store.cart.currentFilling.fillings
+        if (!fillings || !fillings.length) return
+        this.candybarFillingId = fillings[0].id
       }
       const id = this.candybarFillingId ?? this.$store.cart.currentFilling.id
       post('/cart/add/' + id, {
