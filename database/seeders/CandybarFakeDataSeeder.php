@@ -249,6 +249,7 @@ class CandybarFakeDataSeeder extends Seeder
                     Filling::firstOrCreate(
                         ['title' => $fillingData['title'], 'category_id' => $category->id],
                         [
+                            'type_id'      => $type->id,
                             'description'  => $fillingData['description'],
                             'unit_price'   => $fillingData['unit_price'],
                             'min_quantity' => $fillingData['min_quantity'],

@@ -11,7 +11,7 @@
                 <div>
                     <p class="text-left mb-16 text-xl"> 
                         Самовивіз замовлень можна
-                        здійснити за адресою: м. Обухів, вул. Молодіжна 2, (поблизу магазину "Околиця");
+                        здійснити за адресою: м. Обухів, вул. Дзюбівка 9 .
                     </p>
                 </div>
                 <div class="flex items-center justify-center gap-3 mb-6 sm:flex-row flex-col">

@@ -59,12 +59,12 @@
                       <option v-for="item of typeSelectOptions" :key="item.id" :value="item.id">{{ item.name }}</option>
                     </select>
                   </div>
-                  <form @submit.prevent="onSubmit" v-if="categorySelectOptions.length > 0 && (typeSelected.id || filling.id)">
+                  <form @submit.prevent="onSubmit" v-if="typeSelected.id || filling.id">
                     <div class="p-4 bg-white">
-                      <div class="mb-2">
-                        <CustomInput select-title="Оберіть категорію" type="select" 
-                          v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія"/>
-                        <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
+                      <div class="mb-2" v-if="categorySelectOptions.length > 0">
+                        <CustomInput select-title="Без категорії" type="select"
+                          v-model="filling.category_id" :select-prop="categorySelectOptions" label="Категорія (необов'язково)"/>
+                        <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span>
                       </div>
                       <div class="mb-2" >
                         <CustomInput v-model="filling.title" label="Назва" />
@@ -221,10 +221,10 @@ function validationCheck(){
   }
   return isEmptyObject(errMsg.value)
 }
+const optionalFields = ['category_id', 'id']
 function requiredProp(){
   for (let key in filling.value){
-    if(!filling.value[key]){
-      // if(key === 'min_quantity' && )
+    if(!optionalFields.includes(key) && !filling.value[key]){
       errMsg.value[key] = `${key} is required`
     } else {
       delete errMsg.value[key]
@@ -253,39 +253,52 @@ onMounted(() => {
 })
 
 function chooseType(){
-  console.log('chooseType')
+  filling.value.type_id = typeSelected.value.id
+  filling.value.category_id = null
   axiosClient.get('/get-categories/'+typeSelected.value.id)
     .then(({data}) => {
       categorySelectOptions.value = data.map((item) => ({key: item.id, val: item.name}))
     })
 
-    if(checkWeight.value){
-      delete filling.value['min_quantity']
-      filling.value['min_weight'] = ''
-    } else {
-      delete filling.value['min_weight']
-      filling.value['min_quantity'] = ''
-    }
+  if(checkWeight.value){
+    delete filling.value['min_quantity']
+    filling.value['min_weight'] = ''
+  } else {
+    delete filling.value['min_weight']
+    filling.value['min_quantity'] = ''
+  }
 
-    for (let item in filling.value){
-      filling.value[item] = ''
-    }
+  for (let item in filling.value){
+    if(item !== 'type_id') filling.value[item] = ''
+  }
+  filling.value.type_id = typeSelected.value.id
 }
 
 function checkCategoryForUpdate(){
   if(filling.value.id){
-    axiosClient('/get-type-and-categories/'+filling.value.category_id)
-      .then(({data}) => {
-        console.log(data)
-        // typeSelectOptions.value = data.categories
-        typeSelected.value = data.type
-        categorySelectOptions.value = data.categories.map((item) => ({key: item.id, val: item.name}))
-        if(typeSelected.value.weight_quantity === 'weight'){
+    if(filling.value.category_id){
+      axiosClient('/get-type-and-categories/'+filling.value.category_id)
+        .then(({data}) => {
+          typeSelected.value = data.type
+          categorySelectOptions.value = data.categories.map((item) => ({key: item.id, val: item.name}))
+          if(typeSelected.value.weight_quantity === 'weight'){
+            delete filling.value['min_quantity']
+          } else {
+            delete filling.value['min_weight']
+          }
+        })
+    } else if(filling.value.type_id) {
+      const type = typeSelectOptions.value.find((t) => t.id === filling.value.type_id)
+      if(type) {
+        typeSelected.value = type
+        categorySelectOptions.value = []
+        if(type.weight_quantity === 'weight'){
           delete filling.value['min_quantity']
         } else {
           delete filling.value['min_weight']
         }
-    })
+      }
+    }
   }
 }
 

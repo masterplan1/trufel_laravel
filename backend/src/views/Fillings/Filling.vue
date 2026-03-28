@@ -133,7 +133,9 @@ const EMPTY_FILLING_OBJECT = {
   unit_price: '',
   min_weight: '',
   min_quantity: '',
-  category_id: '',}
+  type_id: null,
+  category_id: null,
+}
 
 const fillingModal = ref({
   ...EMPTY_FILLING_OBJECT

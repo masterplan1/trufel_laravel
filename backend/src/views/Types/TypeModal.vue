@@ -97,7 +97,8 @@
                           </span>
                         </label>
 
-                        <label class="flex items-center gap-3 cursor-pointer">
+                        <label v-if="!candybarGroupExists || typeData.is_candybar_group"
+                          class="flex items-center gap-3 cursor-pointer">
                           <input type="checkbox" id="is_candybar_group" v-model="typeData.is_candybar_group"
                             :disabled="typeData.is_candybar"
                             class="h-4 w-4 text-brand-rose border-gray-300 rounded" />
@@ -147,7 +148,7 @@ import { ref, computed, onUpdated } from 'vue'
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 
 const store = useStore()
-const props = defineProps({ modelValue: Boolean, type: Object })
+const props = defineProps({ modelValue: Boolean, type: Object, candybarGroupExists: Boolean })
 
 const errMsg = ref({})
 const loading = ref(false)

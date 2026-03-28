@@ -1,6 +1,6 @@
 export const state = {
   user: {
-    token: sessionStorage.getItem('TOKEN'),
+    token: localStorage.getItem('TOKEN') || sessionStorage.getItem('TOKEN'),
     data: {}
   },
   fillings: {

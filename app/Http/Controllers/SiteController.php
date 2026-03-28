@@ -11,7 +11,8 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $featuredFillings = Filling::with('category.type')
+        $featuredFillings = Filling::with('type')
+            ->whereNotNull('type_id')
             ->latest()
             ->limit(6)
             ->get()
@@ -22,11 +23,11 @@ class SiteController extends Controller
                 'unit_price'           => $filling->unit_price,
                 'min_weight'           => $filling->min_weight,
                 'min_quantity'         => $filling->min_quantity,
-                'type_id'              => $filling->category->type->id,
-                'type_name'            => $filling->category->type->name,
-                'type_weight_quantity' => $filling->category->type->weight_quantity,
-                'type_is_candybar'     => $filling->category->type->is_candybar,
-                'type_route'           => route('filling', $filling->category->type),
+                'type_id'              => $filling->type->id,
+                'type_name'            => $filling->type->name,
+                'type_weight_quantity' => $filling->type->weight_quantity,
+                'type_is_candybar'     => $filling->type->is_candybar,
+                'type_route'           => route('filling', $filling->type),
             ]);
 
         $recentComments = Comment::latest()->limit(3)->get();

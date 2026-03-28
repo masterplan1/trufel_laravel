@@ -116,7 +116,7 @@
           </nav>
         </div>
       </template>
-      <TypeModal v-model="isModalOpen" :type="typeModal" @closeModal="closeModal" @get-types="getTypes({})"/>
+      <TypeModal v-model="isModalOpen" :type="typeModal" :candybar-group-exists="candybarGroupExists" @closeModal="closeModal" @get-types="getTypes({})"/>
     </div>
   </div>
 </template>
@@ -133,6 +133,7 @@ const store = useStore()
 const perPage = ref(TYPES_PER_PAGE)
 const search = ref('')
 const types = computed(() => store.state.types)
+const candybarGroupExists = computed(() => types.value.data?.some(t => t.is_candybar_group) ?? false)
 const sortDirection = ref('desc')
 const sortField = ref('id')
 

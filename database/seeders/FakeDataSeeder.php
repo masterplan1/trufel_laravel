@@ -111,6 +111,7 @@ class FakeDataSeeder extends Seeder
         $biskvitni = Category::firstOrCreate(['name' => 'Бісквітні', 'type_id' => $tort->id]);
         foreach (self::BISKVIТNI_FILLINGS as $data) {
             Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $biskvitni->id], [
+                'type_id' => $tort->id,
                 'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                 'unit_price' => $data['price'], 'min_weight' => 1, 'min_quantity' => null,
             ]);
@@ -118,6 +119,7 @@ class FakeDataSeeder extends Seeder
         $musovi = Category::firstOrCreate(['name' => 'Мусові', 'type_id' => $tort->id]);
         foreach (self::MUSOVI_FILLINGS as $data) {
             Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $musovi->id], [
+                'type_id' => $tort->id,
                 'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                 'unit_price' => $data['price'], 'min_weight' => 1, 'min_quantity' => null,
             ]);
@@ -131,6 +133,7 @@ class FakeDataSeeder extends Seeder
             $cat = Category::firstOrCreate(['name' => $catData['name'], 'type_id' => $cupcakes->id]);
             foreach ($catData['fillings'] as $data) {
                 Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $cat->id], [
+                    'type_id' => $cupcakes->id,
                     'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                     'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 6,
                 ]);
@@ -144,6 +147,7 @@ class FakeDataSeeder extends Seeder
         $bentoClassic = Category::firstOrCreate(['name' => 'Класичні', 'type_id' => $bento->id]);
         foreach (self::BENTO_CLASSIC_FILLINGS as $data) {
             Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $bentoClassic->id], [
+                'type_id' => $bento->id,
                 'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                 'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 1,
             ]);
@@ -151,6 +155,7 @@ class FakeDataSeeder extends Seeder
         $bentoFruit = Category::firstOrCreate(['name' => 'Фруктові', 'type_id' => $bento->id]);
         foreach (self::BENTO_FRUIT_FILLINGS as $data) {
             Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $bentoFruit->id], [
+                'type_id' => $bento->id,
                 'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                 'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 1,
             ]);
@@ -164,6 +169,7 @@ class FakeDataSeeder extends Seeder
             $cat = Category::firstOrCreate(['name' => $catData['name'], 'type_id' => $cakepops->id]);
             foreach ($catData['fillings'] as $data) {
                 Filling::firstOrCreate(['title' => $data['title'], 'category_id' => $cat->id], [
+                    'type_id' => $cakepops->id,
                     'description' => $data['desc'], 'image' => self::FILLING_IMAGE,
                     'unit_price' => $data['price'], 'min_weight' => null, 'min_quantity' => 10,
                 ]);

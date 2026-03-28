@@ -11,17 +11,20 @@ class Filling extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['title', 'description', 'image', 'min_weight', 'min_quantity', 'category_id', 'unit_price'];
-    
+    protected $fillable = ['title', 'description', 'image', 'min_weight', 'min_quantity', 'category_id', 'type_id', 'unit_price'];
+
     public function getImageAttribute($value): ?string
     {
         return $value ? URL::to(Storage::url($value)) : null;
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function type(){
-        return $this->category->type;
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }

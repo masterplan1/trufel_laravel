@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-brand-text py-4 overflow-hidden fixed sm:static h-full sm:h-auto">
+  <div class="bg-brand-text py-4 overflow-hidden fixed sm:static h-full sm:h-auto z-50">
     <router-link :to="{name: 'app.dashboard'}" class="flex text-gray-200 items-center
       hover:bg-white/10 px-8 pb-2 py-2 transition-colors mb-2" active-class="bg-brand-rose text-white">
       <span class="w-5 mr-2"><HomeIcon /></span>

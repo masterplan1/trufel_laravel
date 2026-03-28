@@ -26,7 +26,8 @@ class CreateFillingRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:3'],
             'image' => ['required', 'image'],
-            'category_id' => ['required', 'integer'],
+            'type_id' => ['required', 'integer'],
+            'category_id' => ['nullable', 'integer'],
             'unit_price' => ['required', 'integer'],
             'min_weight' => ['required_without:min_quantity', 'string'],
             'min_quantity' => ['required_without:min_weight', 'integer'],

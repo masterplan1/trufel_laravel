@@ -65,7 +65,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        Image::removeImage($product->image);
+        Image::removeImage($product->getRawOriginal('image'));
         $product->delete();
         return response()->noContent();
     }

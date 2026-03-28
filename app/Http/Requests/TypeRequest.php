@@ -11,6 +11,14 @@ class TypeRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_candybar'       => filter_var($this->is_candybar ?? false, FILTER_VALIDATE_BOOLEAN),
+            'is_candybar_group' => filter_var($this->is_candybar_group ?? false, FILTER_VALIDATE_BOOLEAN),
+        ]);
+    }
+
     public function rules(): array
     {
         return [

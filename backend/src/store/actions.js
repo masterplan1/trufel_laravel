@@ -1,10 +1,11 @@
 import axiosClient from '../axios'
 
 export function login({commit}, data){
+  const remember = data.remember
   return axiosClient.post('/login', data)
     .then(({data}) => {
       commit('setUser', data.user)
-      commit('setToken', data.token)
+      commit('setToken', { token: data.token, remember })
       return data;
     })
 }

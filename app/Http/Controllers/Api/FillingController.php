@@ -38,10 +38,7 @@ class FillingController extends Controller
             $query->orWhere('title', 'like', "%$search%");
         }
         if($type){
-            $query
-                ->join('categories', 'fillings.category_id', '=', 'categories.id')
-                ->where('categories.type_id', $type)
-                ->select('fillings.*');
+            $query->where('type_id', $type);
         }
 
         return FillingListResource::collection($query->paginate($perPage));

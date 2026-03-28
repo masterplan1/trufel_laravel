@@ -30,7 +30,9 @@ class FillingController extends Controller
 
         // Звичайний тип (торти, капкейки, бенто)
         $fillings = $type->fillings;
-        $categories = $type->categories;
+        $categories = Category::where('type_id', $type->id)
+            ->whereHas('fillings')
+            ->get();
         $total_item_count = $type->fillings(null)->count();
         $previewProducts = $type->products(8)->get();
         return view('filling.index', compact('fillings', 'categories', 'type', 'total_item_count', 'previewProducts'));

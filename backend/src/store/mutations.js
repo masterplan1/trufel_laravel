@@ -2,11 +2,20 @@ export function setUser(state, user){
   state.user.data = user
 }
 
-export function setToken(state, token){
+export function setToken(state, payload){
+  const token = payload?.token ?? payload
+  const remember = payload?.remember ?? false
   state.user.token = token
   if(token){
-    sessionStorage.setItem('TOKEN', token)
+    if(remember){
+      localStorage.setItem('TOKEN', token)
+      sessionStorage.removeItem('TOKEN')
+    } else {
+      sessionStorage.setItem('TOKEN', token)
+      localStorage.removeItem('TOKEN')
+    }
   } else {
+    localStorage.removeItem('TOKEN')
     sessionStorage.removeItem('TOKEN')
   }
 }

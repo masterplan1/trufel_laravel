@@ -4,7 +4,7 @@
     <div class="flex-1">
       <Navbar @toggle-menu="toggleSidebar"/>
       <main class="p-6">
-        <div class="p-4 rounded bg-white">
+        <div class="p-4 rounded bg-white overflow-x-auto">
           <router-view></router-view>
         </div>
       </main>

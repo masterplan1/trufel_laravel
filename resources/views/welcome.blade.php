@@ -96,7 +96,7 @@
                     <span class="text-brand-rose font-caveat text-2xl mb-2">Крок 1</span>
                     <h3 class="font-kurale text-xl mb-2">Обери смак</h3>
                     <p class="text-brand-muted leading-relaxed">
-                        Перегляни каталог і підбери начинку, розмір та кількість — все до твого смаку
+                        Переглянь каталог і підбери начинку, розмір та кількість — все до твого смаку
                     </p>
                 </div>
 

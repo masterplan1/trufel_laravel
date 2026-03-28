@@ -32,7 +32,8 @@ class Type extends Model
         return $this->hasMany(Category::class)->limit($limit);
     }
     public function fillings($limit = 6){
-        return $this->hasManyThrough(Filling::class, Category::class)->latest('fillings.id')->limit($limit);
+        $q = $this->hasMany(Filling::class)->latest('id');
+        return $limit !== null ? $q->limit($limit) : $q;
     }
     public function products($limit = 6){
         return $this->hasManyThrough(Product::class, Category::class)->latest('products.id')->limit($limit);
@@ -46,16 +47,15 @@ class Type extends Model
         return self::where('is_candybar', false)->get();
     }
     public function getAdditionalFillings($categoryId = 0, $offset = null, $limit = 6){
-        $query = Filling::query()->select(['f.*', 't.id as type_id', 
-            't.weight_quantity as type_weight_quantity', 't.is_candybar as type_is_candybar', 
+        $query = Filling::query()->select(['f.*',
+            't.weight_quantity as type_weight_quantity', 't.is_candybar as type_is_candybar',
             't.name as type_name'])
             ->from('fillings as f')
-            ->join('categories as c', 'f.category_id', '=', 'c.id')
-            ->join('types as t', 'c.type_id', '=', 't.id');
+            ->join('types as t', 'f.type_id', '=', 't.id');
         if($categoryId != 0){
             $query->where('f.category_id', $categoryId);
         } else {
-            $query->where('t.id', $this->id);
+            $query->where('f.type_id', $this->id);
         }
         if($offset){
             $query->offset($offset);
