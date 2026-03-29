@@ -9,12 +9,12 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          cream: '#F8F8F6',
-          blush: '#EAEAE6',
-          rose: '#A09890',
-          'rose-dark': '#7D766C',
-          text: '#2D2D2D',
-          muted: '#8A8880',
+          cream: '#FFF5F7',
+          blush: '#FFE4EC',
+          rose: '#D4788A',
+          'rose-dark': '#A8485C',
+          text: '#2D1A1F',
+          muted: '#9E7080',
         }
       },
       fontFamily: {

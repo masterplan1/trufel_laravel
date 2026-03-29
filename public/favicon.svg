@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <!-- Background circle -->
-  <circle cx="32" cy="32" r="32" fill="#A09890"/>
+  <circle cx="32" cy="32" r="32" fill="#D4788A"/>
   <!-- Cake base layer -->
   <rect x="12" y="40" width="40" height="12" rx="3" fill="#F0DDD9"/>
   <!-- Cake middle layer -->
