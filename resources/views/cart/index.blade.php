@@ -77,20 +77,9 @@
 
                                     <div class="flex flex-col gap-3">
 
-                                        {{-- Filling selector --}}
-                                        <template x-if="!filling.type.is_candybar">
-                                            <p class="bg-brand-blush px-3 py-1.5 rounded-lg text-brand-text"
-                                                x-text="getFillingTitle"></p>
-                                        </template>
-                                        <template x-if="filling.type.is_candybar">
-                                            <select @change="handleFillingSelecet" x-model="candybarFillingId"
-                                                class="bg-brand-blush px-3 py-1.5 rounded-lg text-brand-text border-0 focus:ring-brand-rose">
-                                                <template x-for="item in filling.candybar_select_items" :key="item.id">
-                                                    <option :value="item.id" x-text="item.title"
-                                                        :selected="item.id === filling.id"></option>
-                                                </template>
-                                            </select>
-                                        </template>
+                                        {{-- Filling name --}}
+                                        <p class="bg-brand-blush px-3 py-1.5 rounded-lg text-brand-text"
+                                            x-text="getFillingTitle"></p>
 
                                         {{-- Weight / Quantity --}}
                                         <div class="flex items-center gap-3">

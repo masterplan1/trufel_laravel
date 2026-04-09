@@ -41,10 +41,10 @@ document.addEventListener('alpine:init', () => {
     filling,
     candybarFillingId: null,
     getHeaderTitle() {
-      return this.filling.type.is_candybar ? (this.filling.category?.name ?? this.filling.title) : this.filling.type.name
+      return this.filling.type.name
     },
     getFillingTitle() {
-      return this.filling.type.is_candybar ? (this.filling.category?.name ?? this.filling.title) : this.filling.title
+      return this.filling.title
     },
     handleWeightIncrease() {
       this.filling.weight = +this.filling.weight + 0.5

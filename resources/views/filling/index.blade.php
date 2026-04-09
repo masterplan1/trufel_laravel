@@ -97,7 +97,7 @@
             @endif
 
             {{-- Fillings grid --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 mb-10 min-h-[460px]">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 mb-10 items-start">
 
                 @foreach ($fillings as $filling)
                     <div x-show="!categoryWasSelected" class="card flex flex-col">
