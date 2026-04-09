@@ -36,7 +36,7 @@ class Type extends Model
         return $limit !== null ? $q->limit($limit) : $q;
     }
     public function products($limit = 6){
-        return $this->hasManyThrough(Product::class, Category::class)->latest('products.id')->limit($limit);
+        return $this->hasMany(Product::class)->latest('id')->limit($limit);
     }
     // public function fillings($limit = 6, $offset = 0){
     //     return $this->hasManyThrough(Filling::class, Category::class)->offset($offset)->limit($limit);

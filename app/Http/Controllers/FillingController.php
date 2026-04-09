@@ -21,18 +21,11 @@ class FillingController extends Controller
             return view('filling.candybar-group', compact('type', 'candybarTypes'));
         }
 
-        // Звичайний кендібар-підтип (кейпопси, льодяники тощо)
-        if($type->is_candybar){
-            $categories = $type->categories(6)->get();
-            $total_item_count  = $type->categories()->count();
-            return view('filling.candybar', compact('categories', 'type', 'total_item_count'));
-        }
-
-        // Звичайний тип (торти, капкейки, бенто)
+        // Звичайний тип (торти, капкейки, бенто) + кендібар-підтип
         $fillings = $type->fillings;
-        $categories = Category::where('type_id', $type->id)
-            ->whereHas('fillings')
-            ->get();
+        $categories = $type->is_candybar
+            ? collect()
+            : Category::where('type_id', $type->id)->whereHas('fillings')->get();
         $total_item_count = $type->fillings(null)->count();
         $previewProducts = $type->products(8)->get();
         return view('filling.index', compact('fillings', 'categories', 'type', 'total_item_count', 'previewProducts'));

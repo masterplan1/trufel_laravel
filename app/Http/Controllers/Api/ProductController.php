@@ -27,10 +27,7 @@ class ProductController extends Controller
         $query->orderBy($sortField, $sortDirection);
 
         if($type){
-            $query
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->where('categories.type_id', $type)
-                ->select('products.*');
+            $query->where('products.type_id', $type);
         }
 
         return ProductListResource::collection($query->paginate($perPage));

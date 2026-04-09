@@ -66,7 +66,7 @@
                         'type_id' => $type->id,
                         'type_name' => $type->name,
                         'type_weight_quantity' => $type->weight_quantity,
-                        'type_is_candybar' => $type->is_candybar,
+                        'type_is_candybar' => false,
                     ],
                 ],
             ),

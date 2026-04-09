@@ -24,7 +24,8 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'image' => ['required', 'image'],
-            'category_id' => ['required', 'integer'],
+            'type_id' => ['required', 'integer', 'exists:types,id'],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
         ];
     }
 }

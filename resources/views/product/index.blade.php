@@ -18,30 +18,6 @@
         ) }}, {{ $type }}, {{ $total_item_count }})" class="mt-8 sm:mt-16 px-4">
             @include('product.modal-zoom')
 
-            @if (count($categories) > 1 && !$type->is_candybar)
-                <div class="flex justify-center gap-3 flex-wrap mb-8">
-                    <button @click="selectCategory(0)"
-                        class="px-5 py-2 rounded-full border transition-colors duration-200 text-sm sm:text-base
-                        hover:bg-brand-rose hover:text-white hover:border-brand-rose"
-                        :class="activeClassCategory === null
-                            ? 'bg-brand-rose text-white border-brand-rose'
-                            : 'border-brand-muted text-brand-muted'">
-                        Весь асортимент
-                    </button>
-
-                    @foreach ($categories as $key => $category)
-                        <button @click="selectCategory({{ $category->id }}, {{ $key }})"
-                            class="px-5 py-2 rounded-full border transition-colors duration-200 text-sm sm:text-base
-                            hover:bg-brand-rose hover:text-white hover:border-brand-rose"
-                            :class="activeClassCategory === {{ $key }}
-                                ? 'bg-brand-rose text-white border-brand-rose'
-                                : 'border-brand-muted text-brand-muted'">
-                            {{ $category->name }}
-                        </button>
-                    @endforeach
-                </div>
-            @endif
-
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10 min-h-[460px] sm:min-h-[400px]">
                 @foreach ($products as $product)
                     <div x-show="!categoryWasSelected" class="relative overflow-hidden rounded-2xl aspect-square group">

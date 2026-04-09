@@ -18,8 +18,8 @@ class ProductListResource extends JsonResource
         return [
             'id' => $this->id,
             'image' => $this->image,
-            'category_id' => $this->category_id,
-            'category_name' => $this->category->name,
+            'type_id' => $this->type_id,
+            'type_name' => $this->type->name,
             'updated_at' => (new DateTime($this->updated_at))->format('Y-m-d H:i'),
         ];
     }

@@ -151,7 +151,7 @@ document.addEventListener('alpine:init', () => {
       return item.fillings[Object.keys(item.fillings)[0]]
     },
     addFillings() {
-      const url = type.is_candybar === 0 ? '/add-fillings/' : '/add-categories/'
+      const url = '/add-fillings/'
       post(url + this.type_id, {
         offset: this.offset,
         category_id: this.categoryId

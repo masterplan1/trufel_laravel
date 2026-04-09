@@ -39,7 +39,7 @@
             <tr>
               <TableHeaderCell field="id" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">ID</TableHeaderCell>
               <TableHeaderCell field="" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">Фото</TableHeaderCell>
-              <TableHeaderCell field="category_id" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">Категорія</TableHeaderCell>
+              <TableHeaderCell field="type_id" @click="handleSort" :sortDirection="sortDirection" :sortField="sortField" class="border-b-2 p-2 text-left">Тип</TableHeaderCell>
               <th class="border-b-2 p-2 text-left cursor-pointer bg-gray-100" >Дії</th>
             </tr>
         </thead>
@@ -50,7 +50,7 @@
               <td class="border-b p-2">
                 <img :src="product.image" class="w-16" :alt="product.title">
               </td>
-              <td class="border-b p-2">{{ product.category_name }}</td>
+              <td class="border-b p-2">{{ product.type_name }}</td>
               <td class="border-b p-2">
                 <div class="flex items-center justify-start">
                   <svg @click="deleteHandler(product.id)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer">
@@ -110,7 +110,8 @@ const sortDirection = ref('desc')
 const sortField = ref('updated_at')
 const EMPTY_PRODUCT_OBJECT = {
   image: '',
-  category_id: '',}
+  type_id: '',
+}
 
 const productModal = ref({
   ...EMPTY_PRODUCT_OBJECT

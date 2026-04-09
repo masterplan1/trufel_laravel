@@ -48,23 +48,14 @@
                       </svg>
                       </button>
                   </header>
-                  <div class="mb-2">
-                    <select @change="chooseType" v-model="typeSelected.id"
-                      class="rounded cursor-pointer hover:bg-gray-100"
-                    >
-                      <option value="null" disabled>Оберіть тип</option>
-                      <option v-for="item of typeSelectOptions" :key="item.id" :value="item.id">{{ item.name }}</option>
-                    </select>
-                  </div>
-                  <form @submit.prevent="onSubmit" v-if="typeSelected.id || product.id">
+                  <form @submit.prevent="onSubmit">
                     <div class="p-4 bg-white">
                       <div class="mb-2">
-                        <CustomInput v-if="categorySelectOptions.length > 0" select-title="Оберіть категорію" type="select" 
-                          v-model="product.category_id" :select-prop="categorySelectOptions" label="Категорія"/>
-                        <span v-if="errMsg['category_id']" class="text-red-400">{{ errMsg['category_id'] }}</span> 
+                        <CustomInput select-title="Оберіть тип" type="select"
+                          v-model="product.type_id" :select-prop="typeSelectOptions" label="Тип"/>
+                        <span v-if="errMsg['type_id']" class="text-red-400">{{ errMsg['type_id'] }}</span>
                       </div>
-                    
-                      
+
                       <div class="mb-2 flex justify-between items-center gap-4">
                         <div class="mt-1" v-if="product.image || preView">
                           <img :src="preView || product.image" class="w-16 rounded" alt="img">
@@ -114,9 +105,7 @@ const props = defineProps({
 })
 const preView = ref(null)
 const errMsg = ref({})
-const typeSelected = ref({id: null})
 const typeSelectOptions = ref([])
-const categorySelectOptions = ref([])
 const loading = ref(false)
 const emit = defineEmits(['update:modelValue', 'closeModal', 'get-products'])
 const product = ref({...props.product})
@@ -129,7 +118,6 @@ function closeModal() {
   show.value = false
   emit('closeModal')
   errMsg.value = {}
-  typeSelected.value = {id: null}
   loading.value = false
   preView.value = null
 }
@@ -189,22 +177,9 @@ function isEmptyObject(obj){
 onMounted(() => {
   axiosClient.get('/type/all')
     .then((res) => {
-      typeSelectOptions.value = res.data
+      typeSelectOptions.value = res.data.map((item) => ({key: item.id, val: item.name}))
     })
-    
 })
-
-function chooseType(){
-  console.log('chooseType')
-  axiosClient.get('/get-categories/'+typeSelected.value.id)
-    .then(({data}) => {
-      categorySelectOptions.value = data.map((item) => ({key: item.id, val: item.name}))
-    })
-
-    for (let item in product.value){
-      product.value[item] = ''
-    }
-}
 
 function changeImage($event){
   product.value.image = $event
