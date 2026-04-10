@@ -25,7 +25,7 @@ class UpdateFillingRequest extends FormRequest
             'title' => ['string'],
             'image' => ['image'],
             'type_id' => ['nullable', 'integer'],
-            'category_id' => ['nullable', 'integer'],
+            'category_id' => ['sometimes', 'nullable', 'integer'],
             'unit_price' => ['integer'],
             'min_weight' => ['string'],
             'min_quantity' => ['integer'],

@@ -54,7 +54,9 @@ export function updateFilling({commit}, filling){
   if(filling.image instanceof File){
     const form = new FormData();
     for (let key in filling){
-      form.append(key, filling[key]);
+      if(filling[key] !== null && filling[key] !== undefined && filling[key] !== '') {
+        form.append(key, filling[key]);
+      }
     }
     form.append('_method', 'PUT');
     filling = form;
@@ -91,7 +93,9 @@ export function createProduct({commit}, product){
   if(product.image instanceof File){
     const form = new FormData();
     for (let key in product){
-      form.append(key, product[key]);
+      if(product[key] !== null && product[key] !== undefined && product[key] !== '') {
+        form.append(key, product[key]);
+      }
     }
     product = form;
   }
