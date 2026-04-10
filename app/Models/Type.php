@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Type extends Model
 {
@@ -11,7 +12,22 @@ class Type extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'weight_quantity', 'is_candybar', 'is_candybar_group', 'image'];
+    protected $fillable = ['name', 'slug', 'weight_quantity', 'is_candybar', 'is_candybar_group', 'image'];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Type $type) {
+            if (empty($type->slug)) {
+                $type->slug = Str::slug(Str::transliterate($type->name));
+            }
+        });
+
+        static::updating(function (Type $type) {
+            if ($type->isDirty('name') && !$type->isDirty('slug')) {
+                $type->slug = Str::slug(Str::transliterate($type->name));
+            }
+        });
+    }
 
     public function getImageAttribute($value): ?string
     {

@@ -27,9 +27,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [SiteController::class, 'index']);
-Route::get('/filling/{type}', [FillingController::class, 'index'])->name('filling');
-Route::post('/add-fillings/{type}', [FillingController::class, 'addFillings'])->name('add-fillings');
-Route::post('/add-categories/{type}', [FillingController::class, 'addCategories'])->name('add-categories');
+
+Route::get('/sitemap.xml', function () {
+    $types = Type::getAll();
+    $content = view('sitemap', compact('types'))->render();
+    return response($content, 200, ['Content-Type' => 'application/xml']);
+});
+Route::get('/filling/{type:slug}', [FillingController::class, 'index'])->name('filling');
+Route::post('/add-fillings/{type:slug}', [FillingController::class, 'addFillings'])->name('add-fillings');
+Route::post('/add-categories/{type:slug}', [FillingController::class, 'addCategories'])->name('add-categories');
 
 Route::get('/contacts', [SiteController::class, 'contacts'])->name('contacts');
 Route::get('/privacy', fn() => view('privacy'))->name('privacy');
