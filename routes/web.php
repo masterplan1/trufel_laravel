@@ -44,7 +44,7 @@ Route::get('/testimonials', [CommentController::class, 'testimonials'])->name('t
 Route::post('/testimonial/create', [CommentController::class, 'addTestimonial'])->name('create-testimonial');
 
 Route::get('/product/{type}', [ProductController::class, 'index'])->name('product');
-Route::post('/add-products/{type}', [ProductController::class, 'addProducts'])->name('add-products');
+Route::post('/add-products/{type:slug}', [ProductController::class, 'addProducts'])->name('add-products');
 
 Route::get('/order', [OrderController::class, 'index'])->middleware('order.cart.empty')->name('order.index');
 Route::post('/order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
