@@ -48,7 +48,8 @@ class Type extends Model
         return $this->hasMany(Category::class)->limit($limit);
     }
     public function fillings($limit = 6){
-        $q = $this->hasMany(Filling::class)->latest('id');
+        // $q = $this->hasMany(Filling::class)->latest('id');
+        $q = $this->hasMany(Filling::class)->orderBy('unit_price', 'asc');
         return $limit !== null ? $q->limit($limit) : $q;
     }
     public function products($limit = 6){
