@@ -77,6 +77,6 @@ class Type extends Model
         if($offset){
             $query->offset($offset);
         }
-        return $query->orderBy('f.id', 'desc')->limit($limit)->get();
+        return $query->orderBy('f.unit_price', 'asc')->limit($limit)->get();
     }
 }
