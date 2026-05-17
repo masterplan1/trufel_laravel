@@ -49,7 +49,7 @@ class Type extends Model
     }
     public function fillings($limit = 6){
         // $q = $this->hasMany(Filling::class)->latest('id');
-        $q = $this->hasMany(Filling::class)->orderBy('unit_price', 'asc');
+        $q = $this->hasMany(Filling::class)->orderBy('unit_price', 'asc')->orderBy('id', 'asc');
         return $limit !== null ? $q->limit($limit) : $q;
     }
     public function products($limit = 6){
@@ -77,6 +77,6 @@ class Type extends Model
         if($offset){
             $query->offset($offset);
         }
-        return $query->orderBy('f.unit_price', 'asc')->limit($limit)->get();
+        return $query->orderBy('f.unit_price', 'asc')->orderBy('f.id', 'asc')->limit($limit)->get();
     }
 }
